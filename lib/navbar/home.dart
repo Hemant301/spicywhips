@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:spicywhips/const/slider.dart';
 import 'package:spicywhips/modal/productmodal.dart';
+import 'package:spicywhips/navbar/drawer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,23 +14,32 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int activeindex = 0;
+  GlobalKey<ScaffoldState> scaffoldkey = GlobalKey();
+  GlobalKey previewContainer = new GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: scaffoldkey,
+        drawer: Container(
+          width: MediaQuery.of(context).size.width * 0.8,
+          child: DrawersPage(),
+        ),
         backgroundColor: activeindex == 0 ? Colors.white : Color(0xffE5E5E5),
         appBar: AppBar(
           backgroundColor: Colors.white,
           leading: InkWell(
               onTap: () {
-                if (activeindex == 0) {
-                  setState(() {
-                    activeindex = 1;
-                  });
-                } else {
-                  setState(() {
-                    activeindex = 0;
-                  });
-                }
+                scaffoldkey.currentState!.openDrawer();
+                //   if (activeindex == 0) {
+                //     setState(() {
+                //       activeindex = 1;
+                //     });
+                //   } else {
+                //     setState(() {
+                //       activeindex = 0;
+                //     });
+                //   }
+                // },
               },
               child: activeindex == 0
                   ? Icon(
@@ -41,7 +52,11 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.black,
                       size: 30,
                     )),
-          title: Image.asset("assets/SWgradient20x_100x@2x 1.png"),
+          title: Image.asset(
+            "assets/SWgradient20x.png",
+            height: 40,
+            width: 100,
+          ),
           actions: [
             Icon(
               Icons.search,
@@ -61,206 +76,140 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        body: activeindex == 0
-            ? SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(children: [
-                  Container(
-                    height: 25,
-                    width: MediaQuery.of(context).size.width,
-                    color: Color(0xffF0F0F0),
-                    child: Center(child: Text("Free shipping above ₹2000")),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: List.generate(
-                        productData.length,
-                        (index) => Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                  height: 60,
-                                  width: 60,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xffF0F0F0),
-                                  ),
-                                  child: Image.asset(
-                                    productData[index].image,
-                                    fit: BoxFit.contain,
-                                  )),
-                              Center(
-                                  child: Container(
-                                      width: 60,
-                                      child: Text(
-                                        "Classic Car 1",
-                                        textAlign: TextAlign.center,
-                                      )))
-                            ],
-                          ),
-                        ),
-                      ),
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(children: [
+            Container(
+              height: 25,
+              width: MediaQuery.of(context).size.width,
+              color: Color(0xffF0F0F0),
+              child: Center(child: Text("Free shipping above ₹2000")),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: List.generate(
+                  productData.length,
+                  (index) => Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                            height: 60,
+                            width: 60,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color(0xffF0F0F0),
+                            ),
+                            child: Image.asset(
+                              productData[index].image,
+                              fit: BoxFit.contain,
+                            )),
+                        Center(
+                            child: Container(
+                                width: 60,
+                                child: Text(
+                                  productData[index].title,
+                                  textAlign: TextAlign.center,
+                                )))
+                      ],
                     ),
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "SPONSORED BRANDS",
-                    style: TextStyle(
-                        color: Colors.black,
-                        // letterSpacing: 1,
-                        // fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                        children: List.generate(
-                      productDitelData.length,
-                      (index) => Brand(
-                        title: "SPONSORED BRANDS",
-                        image: productDitelData[index].image,
-                      ),
-                    )),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "ON DEMAND",
-                    style: TextStyle(
-                        color: Colors.black,
-                        // letterSpacing: 1,
-                        // fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                        children: List.generate(
-                      productDitelData.reversed.length,
-                      (index) => Brand(
-                        title: "SPONSORED BRANDS",
-                        image: productDitelData.reversed.toList()[index].image,
-                      ),
-                    )),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "NEW COLLECTION",
-                    style: TextStyle(
-                        color: Colors.black,
-                        // letterSpacing: 1,
-                        // fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                        children: List.generate(
-                      productDitelData.length,
-                      (index) => Brand(
-                        title: "SPONSORED BRANDS",
-                        image: productDitelData[index].image,
-                      ),
-                    )),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  )
-                ]),
-              )
-            : SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    BackButton(),
-                    Center(
-                      child: Container(
-                        padding: EdgeInsets.all(20),
-                        // height: MediaQuery.of(context).size.height - 300,
-                        width: MediaQuery.of(context).size.width - 70,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Column(children: [
-                          DrawerItem(
-                            name: "Home",
-                            onTap: () {
-                              if (activeindex == 0) {
-                                setState(() {
-                                  activeindex = 1;
-                                });
-                              } else {
-                                setState(() {
-                                  activeindex = 0;
-                                });
-                              }
-                            },
-                          ),
-                          DrawerItem(
-                            name: "Shop",
-                            onTap: () {
-                              Navigator.pushNamed(context, "/shop");
-                            },
-                          ),
-                          DrawerItem(name: "Men"),
-                          DrawerItem(
-                            name: "Women",
-                            onTap: () {
-                              Navigator.pushNamed(context, "/womencat");
-                            },
-                          ),
-                          DrawerItem(
-                            name: "About Us",
-                            onTap: () {
-                              Navigator.pushNamed(context, "/aboutus");
-                            },
-                          ),
-                          DrawerItem(
-                            name: "Blog",
-                            onTap: () {
-                              Navigator.pushNamed(context, "/blog");
-                            },
-                          ),
-                          DrawerItem(
-                            name: "Contact us",
-                            onTap: () {
-                              Navigator.pushNamed(context, "/contactus");
-                            },
-                          ),
-                          DrawerItem(
-                            name: "Help",
-                            onTap: () {
-                              Navigator.pushNamed(context, "/help");
-                            },
-                          ),
-                        ]),
-                      ),
-                    )
-                  ],
                 ),
-              ));
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            MyCorosule(),
+            
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              "SPONSORED BRANDS",
+              style: TextStyle(
+                  color: Colors.black,
+                  // letterSpacing: 1,
+                  // fontWeight: FontWeight.bold,
+                  fontSize: 18),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                  children: List.generate(
+                productDitelData.length,
+                (index) => Brand(
+                  title: "SPONSORED BRANDS",
+                  image: productDitelData[index].image,
+                ),
+              )),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              "ON DEMAND",
+              style: TextStyle(
+                  color: Colors.black,
+                  // letterSpacing: 1,
+                  // fontWeight: FontWeight.bold,
+                  fontSize: 18),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                  children: List.generate(
+                productDitelData.reversed.length,
+                (index) => Brand(
+                  title: "SPONSORED BRANDS",
+                  image: productDitelData.reversed.toList()[index].image,
+                ),
+              )),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              "NEW COLLECTION",
+              style: TextStyle(
+                  color: Colors.black,
+                  // letterSpacing: 1,
+                  // fontWeight: FontWeight.bold,
+                  fontSize: 18),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                  children: List.generate(
+                productDitelData.length,
+                (index) => Brand(
+                  title: "SPONSORED BRANDS",
+                  image: productDitelData[index].image,
+                ),
+              )),
+            ),
+            SizedBox(
+              height: 20,
+            )
+          ]),
+        ));
   }
 }
 

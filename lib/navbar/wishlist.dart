@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import "package:flutter/material.dart";
 import 'package:lottie/lottie.dart';
 import 'package:spicywhips/auth/login.dart';
+import 'package:spicywhips/modal/productmodal.dart';
 
 class Wishlist extends StatelessWidget {
   const Wishlist({Key? key}) : super(key: key);
@@ -49,8 +50,10 @@ class Wishlist extends StatelessWidget {
               // mainAxisSpacing: 10,
               physics: NeverScrollableScrollPhysics(),
               children: List.generate(
-                4,
-                (index) => WishlistProduct(),
+                productDitelData.length,
+                (index) => WishlistProduct(
+                  image: productDitelData[index].image,
+                ),
               ))
         ],
       ),
@@ -59,9 +62,9 @@ class Wishlist extends StatelessWidget {
 }
 
 class WishlistProduct extends StatefulWidget {
-  WishlistProduct({
-    Key? key,
-  }) : super(key: key);
+  WishlistProduct({Key? key, this.image}) : super(key: key);
+
+  String? image;
 
   // int? wishindex = 0;
 
@@ -81,12 +84,12 @@ class _WishlistProductState extends State<WishlistProduct> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
               child: Image.asset(
-                "assets/Rectangle 30.png",
+                widget.image!,
                 height: 200,
                 width: MediaQuery.of(context).size.width / 2 - 10,
               ),
             ),
-            Positioned(top: 10, right: 10, child: Icon(Icons.close))
+            Positioned(top: 20, right: 20, child: Icon(Icons.close))
           ],
         ),
         Padding(

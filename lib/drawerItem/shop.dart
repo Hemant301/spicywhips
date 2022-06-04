@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import 'package:flutter_dropdown/flutter_dropdown.dart';
 import 'package:lottie/lottie.dart';
 import 'package:spicywhips/auth/login.dart';
+import 'package:spicywhips/modal/productmodal.dart';
 
 class ShopPage extends StatefulWidget {
   ShopPage({
@@ -73,25 +74,15 @@ class _ShopPageState extends State<ShopPage> {
                   // mainAxisSpacing: 10,
                   physics: NeverScrollableScrollPhysics(),
                   children: List.generate(
-                    12,
+                    productDitelData.length,
                     (index) => InkWell(
                       onTap: () {
                         Navigator.pushNamed(context, "/shop");
                         print("hii bro");
                       },
                       child: ShopProductList(
-                          // onDoubleTap: () {
-                          //   if (widget.iswishlis ==false) {
-                          //     setState(() {
-                          //       wishindex = 1;
-                          //     });
-                          //   } else {
-                          //     setState(() {
-                          //       widget.wishindex = 0;
-                          //     });
-                          //   }
-                          // },
-                          ),
+                        image: productDitelData[index].image,
+                      ),
                     ),
                   ))
             ],
@@ -101,8 +92,8 @@ class _ShopPageState extends State<ShopPage> {
 }
 
 class ShopProductList extends StatefulWidget {
-  ShopProductList({Key? key, this.iswishlis}) : super(key: key);
-
+  ShopProductList({Key? key, this.iswishlis, this.image}) : super(key: key);
+  String? image;
   // int? wishindex = 0;
   bool? iswishlis;
   bool islike = false;
@@ -142,7 +133,7 @@ class _ShopProductListState extends State<ShopProductList> {
                   });
                 },
                 child: Image.asset(
-                  "assets/Rectangle 30.png",
+                  widget.image!,
                   height: 200,
                   width: MediaQuery.of(context).size.width / 2 - 10,
                 ),
@@ -159,8 +150,8 @@ class _ShopProductListState extends State<ShopProductList> {
                         "assets/fav.json",
                       )),
             Positioned(
-                top: 10,
-                right: 10,
+                top: 20,
+                right: 20,
                 child: widget.iswishlis == false
                     ? Icon(Icons.favorite_border)
                     : Icon(

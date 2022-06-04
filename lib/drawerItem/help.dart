@@ -76,7 +76,7 @@ class Help extends StatelessWidget {
                       BoxDecoration(border: Border.all(color: Colors.grey)),
                   child: DropDown(
                     showUnderline: false,
-                    items: ["Account Settings", "Account Settings"],
+                    items: ["Account", "Account "],
                     hint: Text("Login and Password"),
                     icon: Icon(
                       Icons.expand_more,

@@ -65,6 +65,8 @@ class _CategoryState extends State<Category> {
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: List.generate(
                   productData.length,
                   (index) => Padding(
@@ -88,7 +90,7 @@ class _CategoryState extends State<Category> {
                             child: Container(
                                 width: 60,
                                 child: Text(
-                                  "Classic Car 1",
+                                  productData[index].title,
                                   textAlign: TextAlign.center,
                                 )))
                       ],
@@ -341,7 +343,9 @@ class _CategoryState extends State<Category> {
                     onTap: () {
                       Navigator.pushNamed(context, "/productdiscription");
                     },
-                    child: ProductList(),
+                    child: ProductList(
+                      image: productDitelData[index].image,
+                    ),
                   ),
                 ))
           ],
@@ -352,8 +356,8 @@ class _CategoryState extends State<Category> {
 }
 
 class ProductList extends StatefulWidget {
-  ProductList({Key? key, this.iswishlis,this.image}) : super(key: key);
-String? image; 
+  ProductList({Key? key, this.iswishlis, this.image}) : super(key: key);
+  String? image;
   // int? wishindex = 0;
   bool? iswishlis;
   bool islike = false;
@@ -362,10 +366,7 @@ String? image;
 }
 
 class _ProductListState extends State<ProductList> {
-
-  
   @override
-
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -399,7 +400,7 @@ class _ProductListState extends State<ProductList> {
                   });
                 },
                 child: Image.asset(
-                  "assets/Rectangle 30.png",
+                  widget.image!,
                   height: 200,
                   width: MediaQuery.of(context).size.width / 2 - 10,
                 ),
@@ -416,8 +417,8 @@ class _ProductListState extends State<ProductList> {
                         "assets/fav.json",
                       )),
             Positioned(
-                top: 10,
-                right: 10,
+                top: 20,
+                right: 20,
                 child: widget.iswishlis == false
                     ? Icon(Icons.favorite_border)
                     : Icon(

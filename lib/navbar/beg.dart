@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:lottie/lottie.dart';
 import 'package:spicywhips/auth/login.dart';
 
 class MyBeg extends StatelessWidget {
@@ -30,6 +31,18 @@ class MyBeg extends StatelessWidget {
             ),
             SizedBox(
               height: 30,
+            ),
+
+            Lottie.asset("assets/emptycart.json"),
+            Center(
+              child: Text(
+                "Your cart is empty",
+                style: TextStyle(
+                    color: Colors.black,
+                    // letterSpacing: 1,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
+              ),
             ),
             // Center(
             //   child: Container(

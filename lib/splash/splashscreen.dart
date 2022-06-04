@@ -30,7 +30,7 @@ class SplashScreen extends StatelessWidget {
               children: [
                 Center(
                     child: Image.asset(
-                  "assets/SWgradient20x_100x@2x 1.png",
+                  "assets/SWgradient20x.png",
                   height: 150,
                   width: 150,
                   fit: BoxFit.contain,

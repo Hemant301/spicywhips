@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:spicywhips/const/color.dart';
+import 'package:spicywhips/modal/productmodal.dart';
 
 class ProductDiscription extends StatefulWidget {
   ProductDiscription({Key? key}) : super(key: key);
@@ -74,9 +75,9 @@ class _ProductDiscriptionState extends State<ProductDiscription> {
                           });
                         },
                         children: List.generate(
-                          image.length,
+                          productDitelData.length,
                           (index) => Image.asset(
-                            image[index], height: 200,
+                            productDitelData[index].image, height: 200,
                             width: MediaQuery.of(context).size.width - 20,
                             fit: BoxFit.contain,
 
@@ -85,10 +86,13 @@ class _ProductDiscriptionState extends State<ProductDiscription> {
                         ),
                       ),
                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(
-                          image.length,
+                          productDitelData.length,
                           (index) => Padding(
                                 padding: const EdgeInsets.all(3.0),
                                 child: Container(
@@ -103,6 +107,9 @@ class _ProductDiscriptionState extends State<ProductDiscription> {
                               )),
                     ),
                   ]),
+              SizedBox(
+                height: 20,
+              ),
               Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Column(
@@ -283,7 +290,7 @@ class _ProductDiscriptionState extends State<ProductDiscription> {
                               color: red,
                               child: Center(
                                 child: Text(
-                                  "Login",
+                                  "Add to bag",
                                   style: TextStyle(
                                       color: Colors.white,
                                       letterSpacing: 1,

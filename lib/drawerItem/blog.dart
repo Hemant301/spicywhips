@@ -18,7 +18,7 @@ class Blog extends StatelessWidget {
             children: [
               backbutton(),
               SizedBox(
-                height: 60,
+                height: 30,
               ),
               Padding(
                 padding: EdgeInsets.only(
