@@ -109,18 +109,84 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  Brand(
-                    title: "SPONSORED BRANDS",
-                    image: "Rectangle 28 (1).png",
+                  SizedBox(
+                    height: 20,
                   ),
-                  Brand(
-                    title: "ON DEMAND",
-                    image: "Rectangle 28 (2).png",
+                  Text(
+                    "SPONSORED BRANDS",
+                    style: TextStyle(
+                        color: Colors.black,
+                        // letterSpacing: 1,
+                        // fontWeight: FontWeight.bold,
+                        fontSize: 18),
                   ),
-                  Brand(
-                    title: "NEW COLLECTION",
-                    image: "Rectangle 28 (3).png",
-                  ) //Rectangle 28 (2).png
+                  SizedBox(
+                    height: 20,
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                        children: List.generate(
+                      productDitelData.length,
+                      (index) => Brand(
+                        title: "SPONSORED BRANDS",
+                        image: productDitelData[index].image,
+                      ),
+                    )),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "ON DEMAND",
+                    style: TextStyle(
+                        color: Colors.black,
+                        // letterSpacing: 1,
+                        // fontWeight: FontWeight.bold,
+                        fontSize: 18),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                        children: List.generate(
+                      productDitelData.reversed.length,
+                      (index) => Brand(
+                        title: "SPONSORED BRANDS",
+                        image: productDitelData.reversed.toList()[index].image,
+                      ),
+                    )),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "NEW COLLECTION",
+                    style: TextStyle(
+                        color: Colors.black,
+                        // letterSpacing: 1,
+                        // fontWeight: FontWeight.bold,
+                        fontSize: 18),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                        children: List.generate(
+                      productDitelData.length,
+                      (index) => Brand(
+                        title: "SPONSORED BRANDS",
+                        image: productDitelData[index].image,
+                      ),
+                    )),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  )
                 ]),
               )
             : SingleChildScrollView(
@@ -246,41 +312,21 @@ class Brand extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      SizedBox(
-        height: 20,
-      ),
-      Text(
-        title!,
-        style: TextStyle(
-            color: Colors.black,
-            // letterSpacing: 1,
-            // fontWeight: FontWeight.bold,
-            fontSize: 18),
-      ),
-      SizedBox(
-        height: 20,
-      ),
-      SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: List.generate(
-            5,
-            (index) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Container(
-                  height: 200,
-                  width: 200,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xffF0F0F0),
-                  ),
-                  child: Image.asset(
-                    "assets/${image}",
-                    fit: BoxFit.contain,
-                  )),
-            ),
-          ),
-        ),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Container(
+            height: 200,
+            width: 200,
+            decoration: BoxDecoration(
+                // shape: BoxShape.circle,
+                // color: Color(0xffF0F0F0),
+                ),
+            child: Image.asset(
+              "${image}",
+              height: 200,
+              width: 200,
+              fit: BoxFit.contain,
+            )),
       ),
     ]);
   }

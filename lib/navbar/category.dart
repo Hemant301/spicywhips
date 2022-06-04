@@ -4,6 +4,7 @@ import 'package:flutter_dropdown/flutter_dropdown.dart';
 import 'package:lottie/lottie.dart';
 import 'package:spicywhips/auth/login.dart';
 import 'package:spicywhips/const/color.dart';
+import 'package:spicywhips/modal/productmodal.dart';
 
 class Category extends StatefulWidget {
   Category({
@@ -65,7 +66,7 @@ class _CategoryState extends State<Category> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: List.generate(
-                  10,
+                  productData.length,
                   (index) => Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Column(
@@ -80,7 +81,7 @@ class _CategoryState extends State<Category> {
                               color: Color(0xffF0F0F0),
                             ),
                             child: Image.asset(
-                              "assets/Ellipse 116.png",
+                              productData[index].image,
                               fit: BoxFit.contain,
                             )),
                         Center(
@@ -335,7 +336,7 @@ class _CategoryState extends State<Category> {
                 // mainAxisSpacing: 10,
                 physics: NeverScrollableScrollPhysics(),
                 children: List.generate(
-                  4,
+                  productDitelData.length,
                   (index) => InkWell(
                     onTap: () {
                       Navigator.pushNamed(context, "/productdiscription");
@@ -351,8 +352,8 @@ class _CategoryState extends State<Category> {
 }
 
 class ProductList extends StatefulWidget {
-  ProductList({Key? key, this.iswishlis}) : super(key: key);
-
+  ProductList({Key? key, this.iswishlis,this.image}) : super(key: key);
+String? image; 
   // int? wishindex = 0;
   bool? iswishlis;
   bool islike = false;
@@ -361,7 +362,10 @@ class ProductList extends StatefulWidget {
 }
 
 class _ProductListState extends State<ProductList> {
+
+  
   @override
+
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
