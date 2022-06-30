@@ -157,7 +157,7 @@ class Profile extends StatelessWidget {
               },
               child: Container(
                 width: MediaQuery.of(context).size.width - 60,
-                height: 63,
+                height: 50,
                 color: red,
                 child: Center(
                   child: Text(

@@ -42,55 +42,60 @@ class Blog extends StatelessWidget {
                   (index) => Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 30, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset(
-                          "assets/Rectangle 127.png",
-                          height: 120,
-                          width: 120,
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width / 2,
-                              child: Text(
-                                "It is a long established fact that a reader.",
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/blogdetail');
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image.asset(
+                            "assets/Rectangle 127.png",
+                            height: 120,
+                            width: 120,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width / 2,
+                                child: Text(
+                                  "It is a long established fact that a reader.",
+                                  style: TextStyle(
+                                      color: Color(0xff403F3F),
+                                      // letterSpacing: 1,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 10),
+                                ),
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width / 2,
+                                child: Text(
+                                  "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal",
+                                  style: TextStyle(
+                                      color: Color(0xff403F3F),
+                                      // letterSpacing: 1,
+                                      // fontWeight: FontWeight.bold,
+                                      fontSize: 10),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "5 min ago",
                                 style: TextStyle(
-                                    color: Color(0xff403F3F),
+                                    color: Color.fromARGB(255, 151, 148, 148),
                                     // letterSpacing: 1,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 10),
                               ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width / 2,
-                              child: Text(
-                                "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal",
-                                style: TextStyle(
-                                    color: Color(0xff403F3F),
-                                    // letterSpacing: 1,
-                                    // fontWeight: FontWeight.bold,
-                                    fontSize: 10),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              "5 min ago",
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 151, 148, 148),
-                                  // letterSpacing: 1,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 10),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

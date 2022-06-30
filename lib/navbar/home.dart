@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:spicywhips/const/blogslider.dart';
 import 'package:spicywhips/const/slider.dart';
+import 'package:spicywhips/const/testimonialSlider.dart';
 import 'package:spicywhips/modal/productmodal.dart';
 import 'package:spicywhips/navbar/drawer.dart';
 
@@ -13,6 +15,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<String> reels = [
+    'assets/dummy/kk.png',
+    'assets/dummy/2.png',
+    'assets/dummy/3.png'
+  ];
+
   int activeindex = 0;
   GlobalKey<ScaffoldState> scaffoldkey = GlobalKey();
   GlobalKey previewContainer = new GlobalKey();
@@ -129,7 +137,6 @@ class _HomePageState extends State<HomePage> {
               height: 20,
             ),
             MyCorosule(),
-            
             SizedBox(
               height: 20,
             ),
@@ -207,6 +214,117 @@ class _HomePageState extends State<HomePage> {
             ),
             SizedBox(
               height: 20,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              "COMMERCIALS",
+              style: TextStyle(
+                  color: Colors.black,
+                  // letterSpacing: 1,
+                  // fontWeight: FontWeight.bold,
+                  fontSize: 18),
+            ),
+            SizedBox(
+              height: 2,
+            ),
+            Text(
+              "Our Brands Collobrator",
+              style: TextStyle(
+                  color: Colors.black,
+                  // letterSpacing: 1,
+                  // fontWeight: FontWeight.bold,
+                  fontSize: 18),
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: List.generate(
+                    reels.length,
+                    (index) => InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/commercial');
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Stack(
+                              children: [
+                                Container(
+                                    height: 260,
+                                    width: 117,
+                                    child: Image.asset(
+                                      reels[index],
+                                      fit: BoxFit.cover,
+                                    )),
+                                Container(
+                                  height: 260,
+                                  width: 117,
+                                  child: Image.asset(
+                                    'assets/dummy/trans.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                Positioned(
+                                    left: 10,
+                                    bottom: 10,
+                                    child: Icon(
+                                      Icons.play_arrow,
+                                      color: Colors.white,
+                                      size: 25,
+                                    ))
+                              ],
+                            ),
+                          ),
+                        )),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(color: Colors.red),
+              child: Text(
+                'View More',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            SizedBox(
+              height: 25,
+            ),
+            Text(
+              "BLOG",
+              style: TextStyle(
+                  color: Colors.black,
+                  // letterSpacing: 1,
+                  // fontWeight: FontWeight.bold,
+                  fontSize: 18),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            BlogCorosule(),
+            SizedBox(
+              height: 25,
+            ),
+            Text(
+              "TESTIMONIALS",
+              style: TextStyle(
+                  color: Colors.black,
+                  // letterSpacing: 1,
+                  // fontWeight: FontWeight.bold,
+                  fontSize: 18),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            TestimonialSlider(),
+            SizedBox(
+              height: 10,
             )
           ]),
         ));
@@ -270,11 +388,16 @@ class Brand extends StatelessWidget {
                 // shape: BoxShape.circle,
                 // color: Color(0xffF0F0F0),
                 ),
-            child: Image.asset(
-              "${image}",
-              height: 200,
-              width: 200,
-              fit: BoxFit.contain,
+            child: InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, '/productdiscription');
+              },
+              child: Image.asset(
+                "${image}",
+                height: 200,
+                width: 200,
+                fit: BoxFit.contain,
+              ),
             )),
       ),
     ]);

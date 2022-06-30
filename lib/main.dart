@@ -3,6 +3,7 @@ import 'package:spicywhips/auth/forgetpassword.dart';
 import 'package:spicywhips/auth/login.dart';
 import 'package:spicywhips/auth/newpassword.dart';
 import 'package:spicywhips/auth/verificationotp.dart';
+import 'package:spicywhips/const/commercial.dart';
 import 'package:spicywhips/drawerItem/aboutus.dart';
 import 'package:spicywhips/drawerItem/blog.dart';
 import 'package:spicywhips/drawerItem/contactus.dart';
@@ -11,6 +12,8 @@ import 'package:spicywhips/drawerItem/productdiscription.dart';
 import 'package:spicywhips/drawerItem/shop.dart';
 import 'package:spicywhips/drawerItem/womencat.dart';
 import 'package:spicywhips/navbar/navigationbar.dart';
+import 'package:spicywhips/screen/blogdetail.dart';
+import 'package:spicywhips/screen/checkout.dart';
 import 'package:spicywhips/splash/splashscreen.dart';
 
 void main() {
@@ -52,6 +55,9 @@ class MyApp extends StatelessWidget {
 
           // navigationbar
           "/navigationbar": (context) => NavBar(),
+          "/commercial": (context) => Commercial(),
+          "/checkout": (context) => Checkout(),
+          "/blogdetail": (context) => Blogdetails(),
         });
   }
 }
