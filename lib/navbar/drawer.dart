@@ -43,6 +43,12 @@ class DrawersPage extends StatelessWidget {
                         },
                       ),
                       DrawerItem(
+                        name: "My Order",
+                        onTap: () {
+                          Navigator.pushNamed(context, "/myorder");
+                        },
+                      ),
+                      DrawerItem(
                         name: "About Us",
                         onTap: () {
                           Navigator.pushNamed(context, "/aboutus");

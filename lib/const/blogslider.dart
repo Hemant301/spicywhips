@@ -102,16 +102,22 @@ class _BlogCorosuleState extends State<BlogCorosule> {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 5),
-                                    decoration:
-                                        BoxDecoration(color: Colors.red),
-                                    child: Text(
-                                      'Read More',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, '/blogdetail');
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 5),
+                                      decoration:
+                                          BoxDecoration(color: Colors.red),
+                                      child: Text(
+                                        'Read More',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   )
                                 ],

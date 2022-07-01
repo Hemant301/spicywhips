@@ -73,7 +73,7 @@ class NewPassword extends StatelessWidget {
               Center(
                 child: InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, "/");
+                    Navigator.pushNamed(context, "/sucesspassword");
                   },
                   child: Container(
                     width: MediaQuery.of(context).size.width - 60,

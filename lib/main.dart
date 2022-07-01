@@ -2,18 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:spicywhips/auth/forgetpassword.dart';
 import 'package:spicywhips/auth/login.dart';
 import 'package:spicywhips/auth/newpassword.dart';
+import 'package:spicywhips/auth/signup.dart';
+import 'package:spicywhips/auth/sucesspassword.dart';
 import 'package:spicywhips/auth/verificationotp.dart';
 import 'package:spicywhips/const/commercial.dart';
 import 'package:spicywhips/drawerItem/aboutus.dart';
 import 'package:spicywhips/drawerItem/blog.dart';
 import 'package:spicywhips/drawerItem/contactus.dart';
 import 'package:spicywhips/drawerItem/help.dart';
+import 'package:spicywhips/drawerItem/myorder.dart';
+import 'package:spicywhips/drawerItem/myorderdetail.dart';
 import 'package:spicywhips/drawerItem/productdiscription.dart';
 import 'package:spicywhips/drawerItem/shop.dart';
 import 'package:spicywhips/drawerItem/womencat.dart';
 import 'package:spicywhips/navbar/navigationbar.dart';
 import 'package:spicywhips/screen/blogdetail.dart';
 import 'package:spicywhips/screen/checkout.dart';
+import 'package:spicywhips/screen/selectaddress.dart';
 import 'package:spicywhips/splash/splashscreen.dart';
 
 void main() {
@@ -58,6 +63,12 @@ class MyApp extends StatelessWidget {
           "/commercial": (context) => Commercial(),
           "/checkout": (context) => Checkout(),
           "/blogdetail": (context) => Blogdetails(),
+          "/selectaddress": (context) => Selectaddress(),
+          "/signup": (context) => Signup(),
+          "/myorder": (context) => Myorder(),
+          "/myorderdetail": (context) => Myorderdetail(),
+          "/sucesspassword": (context) => Successpassword(),
         });
   }
 }
+

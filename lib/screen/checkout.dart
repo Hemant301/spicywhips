@@ -35,69 +35,61 @@ class _CheckoutState extends State<Checkout> {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
               ),
               SizedBox(
-                height: 5,
+                height: 15,
               ),
               Text(
                 "Delivery Address",
                 style: TextStyle(fontSize: 18),
               ),
-              Column(
-                children: List.generate(
-                    2,
-                    (index) => Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                activeIndex = index;
-                              });
-                            },
-                            child: Container(
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Color(0xffC4C4C4)),
-                                  color: Color(0xffE5E5E5),
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width / 1.3,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Hemanti Kumari",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                            "House No.- 55, Tirupati Apartment, Road no.-2, Vasant Vihar, New Delhi"),
-                                        Text("Mob.no- 3825062454")
-                                      ],
-                                    ),
-                                  ),
-                                  Expanded(
-                                      child: Icon(
-                                    Icons.circle,
-                                    color: activeIndex == index
-                                        ? themeRed
-                                        : Colors.white,
-                                  ))
-                                ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      activeIndex = 1;
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Color(0xffC4C4C4)),
+                        color: Color(0xffE5E5E5),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width / 1.3,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Hemanti Kumari",
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                            ),
+                              Text(
+                                  "House No.- 55, Tirupati Apartment, Road no.-2, Vasant Vihar, New Delhi"),
+                              Text("Mob.no- 3825062454")
+                            ],
                           ),
-                        )),
+                        ),
+                        Expanded(
+                            child: Icon(
+                          Icons.circle,
+                          color: activeIndex == 1 ? themeRed : Colors.white,
+                        ))
+                      ],
+                    ),
+                  ),
+                ),
               ),
               SizedBox(
                 height: 5,
               ),
               InkWell(
                 onTap: () {
-                  _addNewAddress();
+                  Navigator.pushNamed(context, '/selectaddress');
+                  // _addNewAddress();
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -107,7 +99,7 @@ class _CheckoutState extends State<Checkout> {
                       padding: EdgeInsets.all(8),
                       child: Container(
                         decoration: BoxDecoration(),
-                        child: Center(child: Text("+ Add New Address")),
+                        child: Center(child: Text("+ Select Address")),
                       )),
                 ),
               ),

@@ -107,29 +107,34 @@ class Login extends StatelessWidget {
               SizedBox(
                 height: 50,
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Dont have account?",
-                      style: TextStyle(
-                          color: Colors.black,
-                          // letterSpacing: 1,
-                          // fontWeight: FontWeight.bold,
-                          fontSize: 15),
-                    ),
-                    Text(
-                      "New account",
-                      style: TextStyle(
-                          color: Colors.black,
-                          letterSpacing: 1,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15),
-                    ),
-                  ],
+              InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, '/signup');
+                },
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Dont have account?",
+                        style: TextStyle(
+                            color: Colors.black,
+                            // letterSpacing: 1,
+                            // fontWeight: FontWeight.bold,
+                            fontSize: 15),
+                      ),
+                      Text(
+                        "New account",
+                        style: TextStyle(
+                            color: Colors.black,
+                            letterSpacing: 1,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
