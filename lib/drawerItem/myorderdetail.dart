@@ -49,7 +49,7 @@ class Myorderdetail extends StatelessWidget {
                                   'Id: 12345',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
-                                Text('Order detail',
+                                Text('Delivered',
                                     style: TextStyle(color: Colors.green)),
                               ],
                             ),
@@ -72,6 +72,54 @@ class Myorderdetail extends StatelessWidget {
                             ),
                           ],
                         ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      padding: EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                          color: Color(0xffF5F5F5),
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Neha Singh",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 17),
+                          ),
+                          Text(
+                              'House No.- 55, Tirupati Apartment, Road no.-2, Vasant Vihar, New Delhi'),
+                          Text("Mob.no- 3825062454")
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                          color: Color(0xffF5F5F5),
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Package delivered on Sat, 2nd july",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 17),
+                          ),
+                        ],
                       ),
                     ),
                   ),

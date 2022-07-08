@@ -23,6 +23,8 @@ class _CategoryState extends State<Category> {
   // final _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
+    final Map rcvdData = ModalRoute.of(context)!.settings.arguments as Map;
+    print(rcvdData['title']);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -33,7 +35,7 @@ class _CategoryState extends State<Category> {
             },
             child: Image.asset("assets/backarrow.png")),
         title: Text(
-          "Women",
+          "${rcvdData['title']}",
           style: TextStyle(color: Colors.black, fontSize: 25),
         ),
         actions: [

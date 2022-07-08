@@ -4,6 +4,7 @@ import 'package:spicywhips/navbar/beg.dart';
 import 'package:spicywhips/navbar/category.dart';
 import 'package:spicywhips/navbar/home.dart';
 import 'package:spicywhips/navbar/profile.dart';
+import 'package:spicywhips/navbar/selectcat.dart';
 import 'package:spicywhips/navbar/wishlist.dart';
 
 class NavBar extends StatefulWidget {
@@ -29,7 +30,8 @@ class _NavBarState extends State<NavBar> {
     switchWithInt() {
       switch (pageIndex) {
         case 1:
-          return Category();
+          // return Category();
+          return SelectCat();
         case 2:
           return Profile();
         case 3:

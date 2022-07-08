@@ -1,9 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:spicywhips/bloc/homebloc.dart';
 import 'package:spicywhips/const/blogslider.dart';
 import 'package:spicywhips/const/slider.dart';
 import 'package:spicywhips/const/testimonialSlider.dart';
+import 'package:spicywhips/modal/homemodal.dart';
 import 'package:spicywhips/modal/productmodal.dart';
 import 'package:spicywhips/navbar/drawer.dart';
 
@@ -15,6 +19,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  ScrollController supcatScroller = ScrollController();
   List<String> reels = [
     'assets/dummy/kk.png',
     'assets/dummy/2.png',
@@ -24,6 +29,44 @@ class _HomePageState extends State<HomePage> {
   int activeindex = 0;
   GlobalKey<ScaffoldState> scaffoldkey = GlobalKey();
   GlobalKey previewContainer = new GlobalKey();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    homeBloc.fetchTestimomnial();
+    homeBloc.fetchSlider();
+    homeBloc.fetchCategory();
+    homeBloc.fetchBlog();
+    scrollCat();
+    checkScroller();
+    timer = Timer.periodic(Duration(seconds: 5), (Timer t) => scrollCat());
+  }
+
+  Timer? timer;
+
+  double pixel = 0;
+  void checkScroller() {
+    supcatScroller.addListener(() {
+      pixel = supcatScroller.position.pixels;
+
+      if (supcatScroller.position.pixels ==
+          supcatScroller.position.maxScrollExtent) {
+        Future.delayed(Duration(seconds: 0), () {
+          supcatScroller.animateTo(0,
+              duration: Duration(seconds: 1), curve: Curves.easeOut);
+        });
+      }
+    });
+  }
+
+  scrollCat() {
+    if (supcatScroller.hasClients) {
+      supcatScroller.animateTo(pixel + 85,
+          duration: Duration(seconds: 1), curve: Curves.easeOut);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,18 +109,28 @@ class _HomePageState extends State<HomePage> {
             width: 100,
           ),
           actions: [
-            Icon(
-              Icons.search,
-              color: Colors.black,
-              size: 30,
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, '/search');
+              },
+              child: Icon(
+                Icons.search,
+                color: Colors.black,
+                size: 30,
+              ),
             ),
             SizedBox(
               width: 10,
             ),
-            Image.asset(
-              "assets/bell (4) 2.png",
-              height: 30,
-              width: 30,
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, '/notification');
+              },
+              child: Image.asset(
+                "assets/bell (4) 2.png",
+                height: 30,
+                width: 30,
+              ),
             ),
             SizedBox(
               width: 10,
@@ -96,43 +149,51 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               height: 20,
             ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  productData.length,
-                  (index) => Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                            height: 60,
-                            width: 60,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Color(0xffF0F0F0),
-                            ),
-                            child: Image.asset(
-                              productData[index].image,
-                              fit: BoxFit.contain,
-                            )),
-                        Center(
-                            child: Container(
-                                width: 60,
-                                child: Text(
-                                  productData[index].title,
-                                  textAlign: TextAlign.center,
-                                )))
-                      ],
+            StreamBuilder<CategoryModal>(
+                stream: homeBloc.getCategory.stream,
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) return Container();
+                  return SingleChildScrollView(
+                    controller: supcatScroller,
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: List.generate(
+                        snapshot.data!.data.length,
+                        (index) => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                  height: 60,
+                                  width: 60,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(0xffF0F0F0),
+                                  ),
+                                  child: Image.network(
+                                    snapshot.data!.data[index].categoryImage!,
+                                    fit: BoxFit.contain,
+                                  )),
+                              Center(
+                                  child: Container(
+                                      width: 65,
+                                      child: Text(
+                                        snapshot.data!.data[index].name!,
+                                        style: TextStyle(fontSize: 12),
+                                        textAlign: TextAlign.center,
+                                        maxLines: 2,
+                                      )))
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
-            ),
+                  );
+                }),
             SizedBox(
               height: 20,
             ),
@@ -350,7 +411,7 @@ class DrawerItem extends StatelessWidget {
                     color: Colors.black,
                     letterSpacing: 1,
                     // fontWeight: FontWeight.bold,
-                    fontSize: 20),
+                    fontSize: 18),
               ),
               Icon(Icons.arrow_forward)
             ],

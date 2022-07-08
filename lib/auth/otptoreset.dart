@@ -9,22 +9,21 @@ import 'package:spicywhips/const/textfild.dart';
 import 'package:pinput/pinput.dart';
 import 'package:spicywhips/util/usercred.dart';
 
-class Verificationotp extends StatefulWidget {
-  const Verificationotp({Key? key}) : super(key: key);
+class Otptoreset extends StatefulWidget {
+  const Otptoreset({Key? key}) : super(key: key);
 
   @override
-  State<Verificationotp> createState() => _VerificationotpState();
+  State<Otptoreset> createState() => _OtptoresetState();
 }
 
-class _VerificationotpState extends State<Verificationotp> {
+class _OtptoresetState extends State<Otptoreset> {
   bool isLoading = false;
-
   TextEditingController otpController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final Map rcvdData = ModalRoute.of(context)!.settings.arguments as Map;
-    print(rcvdData['id']);
+    print(rcvdData['phone']);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -87,15 +86,15 @@ class _VerificationotpState extends State<Verificationotp> {
               //     child: Textfiless(
               //   title: "Password",
               // )),
-                isLoading == true
-                  ? Center(
-                      child: CircularProgressIndicator(
-                      color: themeRed,
-                    ))
-                  : Container(),
 
-              const SizedBox(
+              SizedBox(
                 height: 40,
+                child: isLoading == true
+                    ? Center(
+                        child: CircularProgressIndicator(
+                        color: themeRed,
+                      ))
+                    : Container(),
               ),
               Center(
                 child: InkWell(
@@ -104,25 +103,22 @@ class _VerificationotpState extends State<Verificationotp> {
                       Fluttertoast.showToast(msg: "Enter OTP");
                       return;
                     }
-                      setState(() {
+                    setState(() {
                       isLoading = true;
                     });
                     AuthApi _api = AuthApi();
-                    Map data = await _api.verifyotp(
-                        "${rcvdData['id']}", otpController.text);
+                    Map data = await _api.verifyotpPassword(
+                        "${rcvdData['phone']}", otpController.text);
 
                     if (data['status'].toString() == "200") {
-                      userCred.addUserId(data["user"]["_id"]);
-                      Navigator.pushNamed(
-                        context,
-                        "/navigationbar",
-                      );
-                         setState(() {
+                      Navigator.pushNamed(context, "/newpassword",
+                          arguments: {'id': data['user_id']});
+                      setState(() {
                         isLoading = false;
                       });
                     } else {
                       Fluttertoast.showToast(msg: data['message']);
-                         setState(() {
+                      setState(() {
                         isLoading = false;
                       });
                       return;

@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:spicywhips/api/authapi.dart';
 import 'package:spicywhips/const/color.dart';
+import 'package:spicywhips/const/strings.dart';
 import 'package:spicywhips/const/textfild.dart';
+import 'package:spicywhips/util/usercred.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  bool isLoading = false;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController pwdController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,6 +61,7 @@ class Login extends StatelessWidget {
               Center(
                   child: Textfiless(
                 title: "Enter mobile number or Email",
+                controller: emailController,
               )),
               SizedBox(
                 height: 20,
@@ -56,6 +69,7 @@ class Login extends StatelessWidget {
               Center(
                   child: Textfiless(
                 title: "Password",
+                controller: pwdController,
               )),
               Padding(
                 padding:
@@ -82,10 +96,46 @@ class Login extends StatelessWidget {
               SizedBox(
                 height: 40,
               ),
+              isLoading == true
+                  ? Center(
+                      child: CircularProgressIndicator(
+                      color: themeRed,
+                    ))
+                  : Container(),
               Center(
                 child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, "/navigationbar");
+                  onTap: () async {
+                    if (emailController.text == "" ||
+                        pwdController.text == "") {
+                      Fluttertoast.showToast(msg: "Enter all fields");
+                      return;
+                    } else if (pwdController.text.length < 6) {
+                      Fluttertoast.showToast(
+                          msg: "Password should be of 6 digits");
+                      return;
+                    }
+                    setState(() {
+                      isLoading = true;
+                    });
+                    AuthApi _api = AuthApi();
+                    Map data = await _api.doLogin(
+                        emailController.text, pwdController.text);
+                    print(data);
+                    if (data['status'].toString() == "200") {
+                      userCred.addUserId(data["user"]["_id"]);
+                      userCred.addUserToken(data["token"]);
+
+                      Navigator.pushNamed(context, "/navigationbar");
+                      setState(() {
+                        isLoading = false;
+                      });
+                    } else {
+                      Fluttertoast.showToast(msg: data['message']);
+                      setState(() {
+                        isLoading = false;
+                      });
+                      return;
+                    }
                   },
                   child: Container(
                     width: MediaQuery.of(context).size.width - 60,

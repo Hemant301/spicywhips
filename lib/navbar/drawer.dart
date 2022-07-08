@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spicywhips/navbar/home.dart';
+import 'package:spicywhips/util/usercred.dart';
 
 class DrawersPage extends StatelessWidget {
   const DrawersPage({Key? key}) : super(key: key);
@@ -29,17 +30,101 @@ class DrawersPage extends StatelessWidget {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10)),
                     child: Column(children: [
+                      Text(
+                        "Welcome Santosh",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
+                      Divider(
+                        color: Colors.black,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "HOME",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Divider(
+                        color: Colors.black,
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "SHOP IN",
+                          style:
+                              TextStyle(fontSize: 20, color: Color(0xff787878)),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      // DrawerItem(
+                      //   name: "Shop",
+                      //   onTap: () {
+                      //     Navigator.pushNamed(context, "/shop");
+                      //   },
+                      // ),
                       DrawerItem(
-                        name: "Shop",
+                        name: "Men",
                         onTap: () {
-                          Navigator.pushNamed(context, "/shop");
+                          Navigator.pushNamed(context, "/category",
+                              arguments: {'title': "Men"});
                         },
                       ),
-                      DrawerItem(name: "Men"),
                       DrawerItem(
                         name: "Women",
                         onTap: () {
-                          Navigator.pushNamed(context, "/womencat");
+                          Navigator.pushNamed(context, "/category",
+                              arguments: {'title': "Women"});
+                        },
+                      ),
+                      DrawerItem(
+                        name: "Accessories",
+                        onTap: () {
+                          Navigator.pushNamed(context, "/category",
+                              arguments: {'title': "Women"});
+                        },
+                      ),
+                      DrawerItem(
+                        name: "Clerance Zone",
+                        onTap: () {
+                          Navigator.pushNamed(context, "/category",
+                              arguments: {'title': "Women"});
+                        },
+                      ),
+                      DrawerItem(
+                        name: "Specials",
+                        onTap: () {
+                          Navigator.pushNamed(context, "/category",
+                              arguments: {'title': "Women"});
+                        },
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "ENGAGE",
+                          style:
+                              TextStyle(fontSize: 20, color: Color(0xff787878)),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      DrawerItem(
+                        name: "Vote for Designs",
+                        onTap: () {
+                          Navigator.pushNamed(context, "/myorder");
+                        },
+                      ),
+                      DrawerItem(
+                        name: "Refer & Earn",
+                        onTap: () {
+                          Navigator.pushNamed(context, "/myorder");
                         },
                       ),
                       DrawerItem(
@@ -70,6 +155,13 @@ class DrawersPage extends StatelessWidget {
                         name: "Help",
                         onTap: () {
                           Navigator.pushNamed(context, "/help");
+                        },
+                      ),
+                      DrawerItem(
+                        name: "Logout",
+                        onTap: () {
+                          userCred.logoutUser();
+                          Navigator.pushNamed(context, "/login");
                         },
                       ),
                     ]),

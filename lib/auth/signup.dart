@@ -1,10 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:spicywhips/api/authapi.dart';
 import 'package:spicywhips/const/color.dart';
 import 'package:spicywhips/const/strings.dart';
 import 'package:spicywhips/const/textfild.dart';
 
-class Signup extends StatelessWidget {
+class Signup extends StatefulWidget {
   const Signup({Key? key}) : super(key: key);
+
+  @override
+  State<Signup> createState() => _SignupState();
+}
+
+class _SignupState extends State<Signup> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController pwdController = TextEditingController();
+  TextEditingController cpwdController = TextEditingController();
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -62,38 +76,82 @@ class Signup extends StatelessWidget {
                   ),
                   Textfiless(
                     title: "Name",
+                    controller: nameController,
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   Textfiless(
                     title: "Phone no.",
+                    controller: phoneController,
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   Textfiless(
                     title: "Email",
+                    controller: emailController,
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   Textfiless(
                     title: "Password",
+                    controller: pwdController,
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   Textfiless(
                     title: "Confirm Password",
+                    controller: cpwdController,
                   ),
                   SizedBox(
                     height: 30,
                   ),
+                  isLoading == true
+                      ? Center(
+                          child: CircularProgressIndicator(
+                          color: themeRed,
+                        ))
+                      : Container(),
                   Center(
                     child: InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, "/navigationbar");
+                      onTap: () async {
+                        if (nameController.text == "" ||
+                            phoneController.text == "" ||
+                            emailController.text == "" ||
+                            pwdController.text == "" ||
+                            cpwdController.text == "") {
+                          Fluttertoast.showToast(msg: "Enter all fields");
+                          return;
+                        } else if (pwdController.text != cpwdController.text) {
+                          Fluttertoast.showToast(msg: "Password not matched");
+                          return;
+                        }
+                        setState(() {
+                          isLoading = true;
+                        });
+                        AuthApi _api = AuthApi();
+                        Map data = await _api.doSignin(
+                            email: emailController.text,
+                            name: nameController.text,
+                            phone: phoneController.text,
+                            pwd: pwdController.text);
+
+                        if (data['status'].toString() == "200") {
+                          Navigator.pushNamed(context, "/verificationotp",
+                              arguments: {'id': data['result']['_id']});
+                          setState(() {
+                            isLoading = false;
+                          });
+                        } else {
+                          Fluttertoast.showToast(msg: data['message']);
+                          setState(() {
+                            isLoading = false;
+                          });
+                          return;
+                        }
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width - 60,
