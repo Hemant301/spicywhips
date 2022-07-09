@@ -94,17 +94,10 @@ class CategoryDetailModal {
 
 class BlogdetailModal {
   BlogdataModal? blog;
-  CheckLikeModal? checkLike;
+  // CheckLikeModal? checkLike;
   BlogdetailModal(js) {
     blog = BlogdataModal(js['blog']);
-    checkLike = CheckLikeModal(js['checkLike']);
-  }
-}
-
-class CheckLikeModal {
-  bool? islike;
-  CheckLikeModal(js) {
-    islike = js['isLike'] ?? false;
+    // checkLike = CheckLikeModal(js['checkLike']);
   }
 }
 
@@ -119,6 +112,7 @@ class BlogdataModal {
   List<CommentBlogModal> comment = [];
   List<LikesBlogModal> likes = [];
   CreatedByModal? createdBy;
+
   BlogdataModal(js) {
     id = js['_id'] ?? "";
     name = js['name'] ?? "";
@@ -138,8 +132,15 @@ class BlogdataModal {
 }
 
 class LikesBlogModal {
-  
-  LikesBlogModal(js) {}
+  String? user;
+  bool? isLike;
+  String? _id;
+
+  LikesBlogModal(js) {
+    user = js['user'] ?? "";
+    isLike = js['isLike'] ?? false;
+    _id = js['_id'] ?? "";
+  }
 }
 
 class CreatedByModal {
@@ -159,5 +160,26 @@ class CommentBlogModal {
     avatar = js['avatar'] ?? "";
     comment = js['comment'] ?? "";
     commentAt = js['commentAt'] ?? "";
+  }
+}
+
+class CommercialModal {
+  List<CommercialDetailModal> data = [];
+  CommercialModal(js) {
+    for (var i = 0; i < js['commercial'].length; i++) {
+      data.add(CommercialDetailModal(js['commercial'][i]));
+    }
+  }
+}
+
+class CommercialDetailModal {
+  String? _id;
+  String? commercialImage;
+  // String? video;
+
+  CommercialDetailModal(js) {
+    _id = js['_id'] ?? "";
+    commercialImage = js['commercialImage'] ?? "";
+    // video = js['video'] ?? "";
   }
 }

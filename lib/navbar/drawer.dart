@@ -86,7 +86,7 @@ class DrawersPage extends StatelessWidget {
                       DrawerItem(
                         name: "Accessories",
                         onTap: () {
-                          Navigator.pushNamed(context, "/category",
+                          Navigator.pushNamed(context, "/accessories",
                               arguments: {'title': "Women"});
                         },
                       ),
@@ -100,7 +100,7 @@ class DrawersPage extends StatelessWidget {
                       DrawerItem(
                         name: "Specials",
                         onTap: () {
-                          Navigator.pushNamed(context, "/category",
+                          Navigator.pushNamed(context, "/special",
                               arguments: {'title': "Women"});
                         },
                       ),

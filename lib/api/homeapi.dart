@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:spicywhips/util/const.dart';
 import 'package:spicywhips/util/usercred.dart';
@@ -14,6 +15,22 @@ class HomeApi {
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         //  print(response.body);
+        return response;
+      } else {
+        //   print('Request failed with status: ${response.statusCode}.');
+      }
+    } catch (e) {
+      // print(e);
+    } finally {}
+  }
+
+  Future<dynamic> fetchCommercials() async {
+    try {
+      final response = await client.get(
+        Uri.parse("${baseUrl}/api/commercial/get"),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print(response.body);
         return response;
       } else {
         //   print('Request failed with status: ${response.statusCode}.');
@@ -45,7 +62,7 @@ class HomeApi {
         Uri.parse("${baseUrl}/api/blog/get"),
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print(response.body);
+        // print(response.body);
         return response;
       } else {
         //   print('Request failed with status: ${response.statusCode}.');
@@ -65,7 +82,7 @@ class HomeApi {
           body: jsonEncode(body),
           headers: {"Content-Type": "application/json"});
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print(response.body);
+        // print(response.body);
         return response;
       } else {
         //   print('Request failed with status: ${response.statusCode}.');
@@ -73,6 +90,30 @@ class HomeApi {
     } catch (e) {
       // print(e);
     } finally {}
+  }
+
+  Future<dynamic> fetchBlogdetailsinit(id) async {
+    var client = http.Client();
+    try {
+      final body = {"blog_id": "$id", "user_id": userCred.getUserId()};
+      debugPrint("body : $body");
+
+      final response = await client.post(
+          Uri.parse("${baseUrl}/api/blog/userblogdetail"),
+          body: jsonEncode(body),
+          headers: {"Content-Type": "application/json"});
+
+      if (response.statusCode == 200) {
+        //  print(response.body);
+        return jsonDecode(response.body) as Map;
+      } else {
+        debugPrint('Request failed with status: ${response.statusCode}.');
+      }
+    } catch (e) {
+      //// print\(e\);
+    } finally {
+      client.close();
+    }
   }
 
   Future<dynamic> fetchCategory() async {
@@ -107,3 +148,5 @@ class HomeApi {
     } finally {}
   }
 }
+
+final homeapi = HomeApi();

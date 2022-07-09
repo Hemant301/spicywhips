@@ -36,7 +36,9 @@ class _CategoryState extends State<Category> {
             child: Image.asset("assets/backarrow.png")),
         title: Text(
           "${rcvdData['title']}",
-          style: TextStyle(color: Colors.black, fontSize: 25),
+          style: TextStyle(
+            color: Colors.black,
+          ),
         ),
         actions: [
           Icon(

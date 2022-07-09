@@ -11,6 +11,12 @@ class HomeRepo {
     return TestimonialModal(jsonResponse);
   }
 
+  Future<CommercialModal> fetchCommercials() async {
+    final response = await homeApi.fetchCommercials();
+    var jsonResponse = jsonDecode(response.body) as Map;
+    return CommercialModal(jsonResponse);
+  }
+
   Future<SliderModal> fetchSlider() async {
     final response = await homeApi.fetchSlider();
     var jsonResponse = jsonDecode(response.body) as Map;

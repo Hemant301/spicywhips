@@ -18,6 +18,20 @@ class HomeBloc {
     }
   }
 
+  final BehaviorSubject<CommercialModal> _liveCommercial =
+      BehaviorSubject<CommercialModal>();
+  BehaviorSubject<CommercialModal> get getHomeCommercial => _liveCommercial;
+  fetchCommercials() async {
+    try {
+      CommercialModal homeSlider = await _homeRepo.fetchCommercials();
+      // print(homeSlider.imgs!.length);
+
+      _liveCommercial.add(homeSlider);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   final BehaviorSubject<SliderModal> _liveSlider =
       BehaviorSubject<SliderModal>();
   BehaviorSubject<SliderModal> get getslider => _liveSlider;

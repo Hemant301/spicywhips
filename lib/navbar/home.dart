@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage> {
     homeBloc.fetchSlider();
     homeBloc.fetchCategory();
     homeBloc.fetchBlog();
+    homeBloc.fetchCommercials();
     scrollCat();
     checkScroller();
     timer = Timer.periodic(Duration(seconds: 5), (Timer t) => scrollCat());
@@ -301,48 +302,56 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               height: 12,
             ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: List.generate(
-                    reels.length,
-                    (index) => InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(context, '/commercial');
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Stack(
-                              children: [
-                                Container(
-                                    height: 260,
-                                    width: 117,
-                                    child: Image.asset(
-                                      reels[index],
-                                      fit: BoxFit.cover,
-                                    )),
-                                Container(
-                                  height: 260,
-                                  width: 117,
-                                  child: Image.asset(
-                                    'assets/dummy/trans.png',
-                                    fit: BoxFit.cover,
+            StreamBuilder<CommercialModal>(
+                stream: homeBloc.getHomeCommercial.stream,
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Container();
+                  }
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: List.generate(
+                          snapshot.data!.data.length,
+                          (index) => InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(context, '/commercial');
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                          height: 260,
+                                          width: 117,
+                                          child: Image.network(
+                                            snapshot.data!.data[index]
+                                                .commercialImage!,
+                                            fit: BoxFit.cover,
+                                          )),
+                                      Container(
+                                        height: 260,
+                                        width: 117,
+                                        child: Image.asset(
+                                          'assets/dummy/trans.png',
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      Positioned(
+                                          left: 10,
+                                          bottom: 10,
+                                          child: Icon(
+                                            Icons.play_arrow,
+                                            color: Colors.white,
+                                            size: 25,
+                                          ))
+                                    ],
                                   ),
                                 ),
-                                Positioned(
-                                    left: 10,
-                                    bottom: 10,
-                                    child: Icon(
-                                      Icons.play_arrow,
-                                      color: Colors.white,
-                                      size: 25,
-                                    ))
-                              ],
-                            ),
-                          ),
-                        )),
-              ),
-            ),
+                              )),
+                    ),
+                  );
+                }),
             SizedBox(
               height: 10,
             ),

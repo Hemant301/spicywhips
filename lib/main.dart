@@ -8,6 +8,7 @@ import 'package:spicywhips/auth/sucesspassword.dart';
 import 'package:spicywhips/auth/verificationotp.dart';
 import 'package:spicywhips/const/commercial.dart';
 import 'package:spicywhips/drawerItem/aboutus.dart';
+import 'package:spicywhips/drawerItem/accessories.dart';
 import 'package:spicywhips/drawerItem/blog.dart';
 import 'package:spicywhips/drawerItem/contactus.dart';
 import 'package:spicywhips/drawerItem/help.dart';
@@ -15,6 +16,7 @@ import 'package:spicywhips/drawerItem/myorder.dart';
 import 'package:spicywhips/drawerItem/myorderdetail.dart';
 import 'package:spicywhips/drawerItem/productdiscription.dart';
 import 'package:spicywhips/drawerItem/shop.dart';
+import 'package:spicywhips/drawerItem/special.dart';
 import 'package:spicywhips/drawerItem/womencat.dart';
 import 'package:spicywhips/navbar/category.dart';
 import 'package:spicywhips/navbar/navigationbar.dart';
@@ -79,6 +81,8 @@ class MyApp extends StatelessWidget {
           "/otptoreset": (context) => Otptoreset(),
           "/search": (context) => Search(),
           "/notification": (context) => NotificationScreen(),
+          "/special": (context) => Special(),
+          "/accessories": (context) => Accessories(),
         });
   }
 }
