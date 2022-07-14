@@ -98,27 +98,33 @@ class Myorder extends StatelessWidget {
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      Container(
-                                        padding: EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: Color(0xff787878)),
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: [
-                                            Text(
-                                              "Rate your Experience",
-                                              style:
-                                                  TextStyle(color: Colors.red),
-                                            ),
-                                            Icon(
-                                              Icons.arrow_forward_ios,
-                                              size: 20,
-                                            )
-                                          ],
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                              context, '/ratedelivery');
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.all(5),
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Color(0xff787878)),
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Text(
+                                                "Rate your Experience",
+                                                style: TextStyle(
+                                                    color: Colors.red),
+                                              ),
+                                              Icon(
+                                                Icons.arrow_forward_ios,
+                                                size: 20,
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       )
                                     ],

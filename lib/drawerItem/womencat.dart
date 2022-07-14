@@ -348,7 +348,8 @@ class _WomneCatState extends State<WomneCat> {
                   productDitelData.length,
                   (index) => InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, "/productdiscription");
+                      Navigator.pushNamed(context, "/productdiscription",
+                          arguments: {'id': "1"});
                     },
                     child: ProductList(
                       image: productDitelData[index].image,
@@ -386,7 +387,8 @@ class _ProductListState extends State<ProductList> {
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
               child: InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, "/productdiscription");
+                  Navigator.pushNamed(context, "/productdiscription",
+                      arguments: {'id': "1"});
                 },
                 onDoubleTap: () {
                   setState(() {

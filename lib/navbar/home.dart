@@ -2,7 +2,9 @@
 
 import 'dart:async';
 
+import 'package:fl_toast/fl_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:spicywhips/bloc/homebloc.dart';
 import 'package:spicywhips/const/blogslider.dart';
 import 'package:spicywhips/const/slider.dart';
@@ -39,9 +41,11 @@ class _HomePageState extends State<HomePage> {
     homeBloc.fetchCategory();
     homeBloc.fetchBlog();
     homeBloc.fetchCommercials();
+    homeBloc.fetchHomeProduct();
     scrollCat();
     checkScroller();
     timer = Timer.periodic(Duration(seconds: 5), (Timer t) => scrollCat());
+    // timer = Timer.periodic(Duration(seconds: 15), (Timer t) => banner());
   }
 
   Timer? timer;
@@ -59,6 +63,33 @@ class _HomePageState extends State<HomePage> {
         });
       }
     });
+  }
+
+  banner() async {
+    await showAndroidToast(
+      backgroundColor: Color(0xffEA919C),
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 10),
+        child: Row(
+          children: [
+            CircleAvatar(
+              radius: 20,
+              backgroundImage: NetworkImage(
+                  "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000"),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              'Adarsh bought black tshirt from mumbai',
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
+      context: context,
+    );
   }
 
   scrollCat() {
@@ -202,91 +233,143 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               height: 20,
             ),
-            Text(
-              "SPONSORED BRANDS",
-              style: TextStyle(
-                  color: Colors.black,
-                  // letterSpacing: 1,
-                  // fontWeight: FontWeight.bold,
-                  fontSize: 18),
+            SizedBox(
+              height: 20,
+            ),
+            StreamBuilder<HomeProductModal>(
+                stream: homeBloc.getHomeProduct.stream,
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Container();
+                  }
+                  return Column(
+                    children: List.generate(
+                      snapshot.data!.products.length,
+                      (index) => Column(
+                        children: [
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Divider(
+                            color: Colors.black,
+                            thickness: 1,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.star,
+                                color: Color(0xffF0CC6D),
+                                size: 20,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                snapshot.data!.products[index].title!,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    // letterSpacing: 1,
+                                    // fontWeight: FontWeight.bold,
+                                    fontSize: 16),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Icon(
+                                Icons.star,
+                                color: Color(0xffF0CC6D),
+                                size: 20,
+                              ),
+                            ],
+                          ),
+                          Divider(
+                            color: Colors.black,
+                            thickness: 1,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                                children: List.generate(
+                              snapshot.data!.products[index].productList.length,
+                              (i) => InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, "/productdiscription",
+                                      arguments: {
+                                        'id': snapshot.data!.products[index]
+                                            .productList[i].id
+                                      });
+                                },
+                                child: Brand(
+                                  title: "SPONSORED",
+                                  image: snapshot.data!.products[index]
+                                      .productList[i].image[0].img,
+                                ),
+                              ),
+                            )),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 200,
+              child: Image.network(
+                'https://img.freepik.com/free-psd/super-sale-banner_1393-365.jpg?1&t=st=1657619150~exp=1657619750~hmac=9951be15882efd88815a97e95340ef71282c2d799d1d98b1ba353536fb862a13&w=1060',
+                fit: BoxFit.cover,
+              ),
             ),
             SizedBox(
               height: 20,
             ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                  children: List.generate(
-                productDitelData.length,
-                (index) => Brand(
-                  title: "SPONSORED BRANDS",
-                  image: productDitelData[index].image,
+            SizedBox(
+              height: 20,
+            ),
+            Divider(
+              color: Colors.black,
+              thickness: 1,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.star,
+                  color: Color(0xffF0CC6D),
+                  size: 20,
                 ),
-              )),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              "ON DEMAND",
-              style: TextStyle(
-                  color: Colors.black,
-                  // letterSpacing: 1,
-                  // fontWeight: FontWeight.bold,
-                  fontSize: 18),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                  children: List.generate(
-                productDitelData.reversed.length,
-                (index) => Brand(
-                  title: "SPONSORED BRANDS",
-                  image: productDitelData.reversed.toList()[index].image,
+                SizedBox(
+                  width: 10,
                 ),
-              )),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              "NEW COLLECTION",
-              style: TextStyle(
-                  color: Colors.black,
-                  // letterSpacing: 1,
-                  // fontWeight: FontWeight.bold,
-                  fontSize: 18),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                  children: List.generate(
-                productDitelData.length,
-                (index) => Brand(
-                  title: "SPONSORED BRANDS",
-                  image: productDitelData[index].image,
+                Text(
+                  "COMMERCIALS",
+                  style: TextStyle(
+                      color: Colors.black,
+                      // letterSpacing: 1,
+                      // fontWeight: FontWeight.bold,
+                      fontSize: 16),
                 ),
-              )),
+                SizedBox(
+                  width: 10,
+                ),
+                Icon(
+                  Icons.star,
+                  color: Color(0xffF0CC6D),
+                  size: 20,
+                ),
+              ],
             ),
-            SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              "COMMERCIALS",
-              style: TextStyle(
-                  color: Colors.black,
-                  // letterSpacing: 1,
-                  // fontWeight: FontWeight.bold,
-                  fontSize: 18),
+            Divider(
+              color: Colors.black,
+              thickness: 1,
             ),
             SizedBox(
               height: 2,
@@ -366,13 +449,45 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               height: 25,
             ),
-            Text(
-              "BLOG",
-              style: TextStyle(
-                  color: Colors.black,
-                  // letterSpacing: 1,
-                  // fontWeight: FontWeight.bold,
-                  fontSize: 18),
+            Divider(
+              color: Colors.black,
+              thickness: 1,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.star,
+                  color: Color(0xffF0CC6D),
+                  size: 20,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  "BLOGS",
+                  style: TextStyle(
+                      color: Colors.black,
+                      // letterSpacing: 1,
+                      // fontWeight: FontWeight.bold,
+                      fontSize: 16),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Icon(
+                  Icons.star,
+                  color: Color(0xffF0CC6D),
+                  size: 20,
+                ),
+              ],
+            ),
+            Divider(
+              color: Colors.black,
+              thickness: 1,
+            ),
+            SizedBox(
+              height: 2,
             ),
             SizedBox(
               height: 10,
@@ -381,13 +496,45 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               height: 25,
             ),
-            Text(
-              "TESTIMONIALS",
-              style: TextStyle(
-                  color: Colors.black,
-                  // letterSpacing: 1,
-                  // fontWeight: FontWeight.bold,
-                  fontSize: 18),
+            Divider(
+              color: Colors.black,
+              thickness: 1,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.star,
+                  color: Color(0xffF0CC6D),
+                  size: 20,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  "TESTIMONIALS",
+                  style: TextStyle(
+                      color: Colors.black,
+                      // letterSpacing: 1,
+                      // fontWeight: FontWeight.bold,
+                      fontSize: 16),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Icon(
+                  Icons.star,
+                  color: Color(0xffF0CC6D),
+                  size: 20,
+                ),
+              ],
+            ),
+            Divider(
+              color: Colors.black,
+              thickness: 1,
+            ),
+            SizedBox(
+              height: 2,
             ),
             SizedBox(
               height: 10,
@@ -458,16 +605,11 @@ class Brand extends StatelessWidget {
                 // shape: BoxShape.circle,
                 // color: Color(0xffF0F0F0),
                 ),
-            child: InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, '/productdiscription');
-              },
-              child: Image.asset(
-                "${image}",
-                height: 200,
-                width: 200,
-                fit: BoxFit.contain,
-              ),
+            child: Image.network(
+              "${image}",
+              height: 200,
+              width: 200,
+              fit: BoxFit.contain,
             )),
       ),
     ]);

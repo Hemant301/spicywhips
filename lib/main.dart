@@ -23,8 +23,14 @@ import 'package:spicywhips/navbar/navigationbar.dart';
 import 'package:spicywhips/navbar/search.dart';
 import 'package:spicywhips/screen/blogdetail.dart';
 import 'package:spicywhips/screen/checkout.dart';
+import 'package:spicywhips/screen/faqanswer.dart';
 import 'package:spicywhips/screen/notification.dart';
+import 'package:spicywhips/screen/ratedelivery.dart';
+import 'package:spicywhips/screen/rateproduct.dart';
+import 'package:spicywhips/screen/refer.dart';
+import 'package:spicywhips/screen/referhelp.dart';
 import 'package:spicywhips/screen/selectaddress.dart';
+import 'package:spicywhips/screen/vote.dart';
 import 'package:spicywhips/splash/splashscreen.dart';
 import 'package:spicywhips/util/storage.dart';
 
@@ -83,6 +89,12 @@ class MyApp extends StatelessWidget {
           "/notification": (context) => NotificationScreen(),
           "/special": (context) => Special(),
           "/accessories": (context) => Accessories(),
+          "/refer": (context) => Refer(),
+          "/referhelp": (context) => Referhelp(),
+          "/faqanswer": (context) => Faqanswer(),
+          "/vote": (context) => Vote(),
+          "/ratedelivery": (context) => Ratedelivery(),
+          "/rateproduct": (context) => Rateproduct(),
         });
   }
 }

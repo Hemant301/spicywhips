@@ -118,13 +118,13 @@ class DrawersPage extends StatelessWidget {
                       DrawerItem(
                         name: "Vote for Designs",
                         onTap: () {
-                          Navigator.pushNamed(context, "/myorder");
+                          Navigator.pushNamed(context, "/vote");
                         },
                       ),
                       DrawerItem(
                         name: "Refer & Earn",
                         onTap: () {
-                          Navigator.pushNamed(context, "/myorder");
+                          Navigator.pushNamed(context, "/refer");
                         },
                       ),
                       DrawerItem(

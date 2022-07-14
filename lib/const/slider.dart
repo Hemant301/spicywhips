@@ -18,11 +18,6 @@ class _MyCorosuleState extends State<MyCorosule> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> image = [
-      "assets/016 Slider.jpeg",
-      "assets/slider2.jpeg",
-      "assets/slider3.jpeg"
-    ];
     return StreamBuilder<SliderModal>(
         stream: homeBloc.getslider.stream,
         builder: (context, snapshot) {
@@ -36,71 +31,61 @@ class _MyCorosuleState extends State<MyCorosule> {
                   // Navigator.pushNamed(context, "/bundlecreatorPage",
                   //     arguments: {'id': '1', 'index': '1'});
                 },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: CarouselSlider(
-                        options: CarouselOptions(
-                          onPageChanged: (int i, G) {
-                            setState(() {
-                              ci = i;
-                            });
-                          },
-                          //onPageChanged: (int index) {},
-                          //height: size.width / 2,
-                          aspectRatio: 3.8 / 2,
-                          viewportFraction: 1,
-                          initialPage: 0,
-                          enableInfiniteScroll: true,
-                          reverse: false,
-                          autoPlay: true,
-                          autoPlayInterval: Duration(seconds: 3),
-                          autoPlayAnimationDuration:
-                              Duration(milliseconds: 800),
-                          autoPlayCurve: Curves.fastOutSlowIn,
-                          enlargeCenterPage: false,
-                          enlargeStrategy: CenterPageEnlargeStrategy.height,
-                          //onPageChanged: callbackFunction,
-                          scrollDirection: Axis.horizontal,
-                        ),
-                        items: List.generate(
-                          snapshot.data!.data.length,
-                          (index) => InkWell(
-                            // onTap: () {
-                            //   Navigator.pushNamed(context, '/categorylist',
-                            //       arguments: {'id': (widget.data![index].cat).toString()});
-                            // },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              child: Image.network(
-                                snapshot.data!.data[index].sliderImage!,
-                                errorBuilder: (context, error, stackTrace) =>
-                                    Image.asset('assets/016 Slider.jpeg'),
-                                fit: BoxFit.fill,
-                              ),
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(0),
+                    child: CarouselSlider(
+                      options: CarouselOptions(
+                        onPageChanged: (int i, G) {
+                          setState(() {
+                            ci = i;
+                          });
+                        },
+                        //onPageChanged: (int index) {},
+                        //height: size.width / 2,
+                        aspectRatio: 3.8 / 2,
+                        viewportFraction: 1,
+                        initialPage: 0,
+                        enableInfiniteScroll: true,
+                        reverse: false,
+                        autoPlay: true,
+                        autoPlayInterval: Duration(seconds: 3),
+                        autoPlayAnimationDuration: Duration(milliseconds: 800),
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        enlargeCenterPage: false,
+                        enlargeStrategy: CenterPageEnlargeStrategy.height,
+                        //onPageChanged: callbackFunction,
+                        scrollDirection: Axis.horizontal,
+                      ),
+                      items: List.generate(
+                        snapshot.data!.data.length,
+                        (index) => InkWell(
+                          // onTap: () {
+                          //   Navigator.pushNamed(context, '/categorylist',
+                          //       arguments: {'id': (widget.data![index].cat).toString()});
+                          // },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Image.network(
+                              snapshot.data!.data[index].sliderImage!,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Image.asset('assets/016 Slider.jpeg'),
+                              fit: BoxFit.fill,
                             ),
                           ),
                         ),
-                      )),
-                ),
-              ),
-              SizedBox(
-                height: 10,
+                      ),
+                    )),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
                     snapshot.data!.data.length,
-                    (index) => Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Container(
-                            width: 8,
-                            height: 8,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: ci == index ? Colors.red : Colors.grey),
-                          ),
+                    (index) => Container(
+                          width: MediaQuery.of(context).size.width /
+                              snapshot.data!.data.length,
+                          height: 5,
+                          decoration: BoxDecoration(
+                              color: ci == index ? Colors.red : Colors.grey),
                         )),
               ),
             ],

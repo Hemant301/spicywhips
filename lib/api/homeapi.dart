@@ -24,10 +24,42 @@ class HomeApi {
     } finally {}
   }
 
+  Future<dynamic> fetchSubCat(id) async {
+    try {
+      final response = await client.get(
+        Uri.parse("${baseUrl}/api/subcategory/get/supercategory/$id"),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // print(response.body);
+        return response;
+      } else {
+        //   print('Request failed with status: ${response.statusCode}.');
+      }
+    } catch (e) {
+      // print(e);
+    } finally {}
+  }
+
   Future<dynamic> fetchCommercials() async {
     try {
       final response = await client.get(
         Uri.parse("${baseUrl}/api/commercial/get"),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // print(response.body);
+        return response;
+      } else {
+        //   print('Request failed with status: ${response.statusCode}.');
+      }
+    } catch (e) {
+      // print(e);
+    } finally {}
+  }
+
+  Future<dynamic> fetchHomeProduct() async {
+    try {
+      final response = await client.get(
+        Uri.parse("${baseUrl}/api/product/home"),
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         print(response.body);
@@ -92,6 +124,26 @@ class HomeApi {
     } finally {}
   }
 
+  Future<dynamic> fetchProductdetails(id) async {
+    try {
+      final body = {"product_id": "$id"};
+      print("body : $body");
+
+      final response = await client.post(
+          Uri.parse("${baseUrl}/api/product/getdetail"),
+          body: jsonEncode(body),
+          headers: {"Content-Type": "application/json"});
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // print(response.body);
+        return response;
+      } else {
+        //   print('Request failed with status: ${response.statusCode}.');
+      }
+    } catch (e) {
+      // print(e);
+    } finally {}
+  }
+
   Future<dynamic> fetchBlogdetailsinit(id) async {
     var client = http.Client();
     try {
@@ -104,6 +156,26 @@ class HomeApi {
           headers: {"Content-Type": "application/json"});
 
       if (response.statusCode == 200) {
+        //  print(response.body);
+        return jsonDecode(response.body) as Map;
+      } else {
+        debugPrint('Request failed with status: ${response.statusCode}.');
+      }
+    } catch (e) {
+      //// print\(e\);
+    } finally {
+      client.close();
+    }
+  }
+
+  Future<dynamic> fetchSupercat() async {
+    var client = http.Client();
+    try {
+      final response = await client.get(
+        Uri.parse("${baseUrl}/api/category/getcategory"),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
         //  print(response.body);
         return jsonDecode(response.body) as Map;
       } else {

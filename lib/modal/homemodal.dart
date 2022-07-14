@@ -80,12 +80,12 @@ class CategoryModal {
 }
 
 class CategoryDetailModal {
-  String? _id;
+  String? id;
   String? name;
   String? categoryImage;
   String? createdAt;
   CategoryDetailModal(js) {
-    _id = js['_id'] ?? "";
+    id = js['_id'] ?? "";
     name = js['name'] ?? "";
     categoryImage = js['categoryImage'] ?? "";
     createdAt = js['createdAt'] ?? "";
@@ -181,5 +181,63 @@ class CommercialDetailModal {
     _id = js['_id'] ?? "";
     commercialImage = js['commercialImage'] ?? "";
     // video = js['video'] ?? "";
+  }
+}
+
+class HomeProductModal {
+  List<HomeproductsdetailModal> products = [];
+  HomeProductModal(js) {
+    for (var i = 0; i < js['products'].length; i++) {
+      products.add(HomeproductsdetailModal(js['products'][i]));
+    }
+  }
+}
+
+class HomeproductsdetailModal {
+  String? title;
+  List<ProductdetailModal> productList = [];
+  HomeproductsdetailModal(js) {
+    title = js['title'] ?? "";
+    for (var i = 0; i < js['product'].length; i++) {
+      productList.add(ProductdetailModal(js['product'][i]));
+    }
+  }
+}
+
+class ProductdetailModal {
+  String? id;
+  List<HomeproductImage> image = [];
+  ProductdetailModal(js) {
+    id = js['_id'] ?? "";
+    for (var i = 0; i < js['productPictures'].length; i++) {
+      image.add(HomeproductImage(js['productPictures'][i]));
+    }
+  }
+}
+
+class HomeproductImage {
+  String? img;
+  HomeproductImage(js) {
+    img = js['img'] ?? "";
+  }
+}
+
+class SubCatModal {
+  List<SubcatResultModal> data = [];
+  SubCatModal(js) {
+    for (var i = 0; i < js['result'].length; i++) {
+      data.add(SubcatResultModal(js['result'][i]));
+    }
+  }
+}
+
+class SubcatResultModal {
+  String? id;
+  String? name;
+  String? supercategory;
+  SubcatResultModal(js) {
+    id = js['id'] ?? "";
+    name = js['name'] ?? "";
+    supercategory = js['supercategory'] ?? "";
   }
 }

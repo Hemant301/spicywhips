@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:spicywhips/api/homeapi.dart';
 import 'package:spicywhips/modal/homemodal.dart';
+import 'package:spicywhips/modal/productdetailmodal.dart';
 
 class HomeRepo {
   HomeApi homeApi = HomeApi();
@@ -11,10 +12,22 @@ class HomeRepo {
     return TestimonialModal(jsonResponse);
   }
 
+  Future<SubCatModal> fetchSubCat(id) async {
+    final response = await homeApi.fetchSubCat(id);
+    var jsonResponse = jsonDecode(response.body) as Map;
+    return SubCatModal(jsonResponse);
+  }
+
   Future<CommercialModal> fetchCommercials() async {
     final response = await homeApi.fetchCommercials();
     var jsonResponse = jsonDecode(response.body) as Map;
     return CommercialModal(jsonResponse);
+  }
+
+  Future<HomeProductModal> fetchHomeProduct() async {
+    final response = await homeApi.fetchHomeProduct();
+    var jsonResponse = jsonDecode(response.body) as Map;
+    return HomeProductModal(jsonResponse);
   }
 
   Future<SliderModal> fetchSlider() async {
@@ -33,6 +46,12 @@ class HomeRepo {
     final response = await homeApi.fetchBlogdetails(id);
     var jsonResponse = jsonDecode(response.body) as Map;
     return BlogdetailModal(jsonResponse);
+  }
+
+  Future<ProductdetailWiseModal> fetchProductdetails(id) async {
+    final response = await homeApi.fetchProductdetails(id);
+    var jsonResponse = jsonDecode(response.body) as Map;
+    return ProductdetailWiseModal(jsonResponse);
   }
 
   Future<CategoryModal> fetchCategory() async {

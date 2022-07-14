@@ -70,7 +70,7 @@ packages:
       name: cupertino_icons
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.5"
   dotted_border:
     dependency: "direct main"
     description:
@@ -99,6 +99,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.1.2"
+  fl_toast:
+    dependency: "direct main"
+    description:
+      name: fl_toast
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -110,7 +117,7 @@ packages:
       name: flutter_dropdown
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0+hotfix.1"
+    version: "1.0.1+hotfix.1"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -246,7 +253,7 @@ packages:
       name: pinput
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.9"
+    version: "2.2.11"
   platform:
     dependency: transitive
     description:
@@ -331,6 +338,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
+  shimmer:
+    dependency: "direct main"
+    description:
+      name: shimmer
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   sky_engine:
     dependency: transitive
     description: flutter

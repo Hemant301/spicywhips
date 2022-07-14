@@ -1,5 +1,6 @@
 import 'package:rxdart/rxdart.dart';
 import 'package:spicywhips/modal/homemodal.dart';
+import 'package:spicywhips/modal/productdetailmodal.dart';
 import 'package:spicywhips/repo/homerepo.dart';
 
 class HomeBloc {
@@ -18,6 +19,20 @@ class HomeBloc {
     }
   }
 
+  final BehaviorSubject<SubCatModal> _liveSubcat =
+      BehaviorSubject<SubCatModal>();
+  BehaviorSubject<SubCatModal> get getSubcat => _liveSubcat;
+  fetchSubCat(id) async {
+    try {
+      SubCatModal homeSlider = await _homeRepo.fetchSubCat(id);
+      // print(homeSlider.imgs!.length);
+
+      _liveSubcat.add(homeSlider);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   final BehaviorSubject<CommercialModal> _liveCommercial =
       BehaviorSubject<CommercialModal>();
   BehaviorSubject<CommercialModal> get getHomeCommercial => _liveCommercial;
@@ -27,6 +42,20 @@ class HomeBloc {
       // print(homeSlider.imgs!.length);
 
       _liveCommercial.add(homeSlider);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  final BehaviorSubject<HomeProductModal> _liveHomeProduct =
+      BehaviorSubject<HomeProductModal>();
+  BehaviorSubject<HomeProductModal> get getHomeProduct => _liveHomeProduct;
+  fetchHomeProduct() async {
+    try {
+      HomeProductModal homeSlider = await _homeRepo.fetchHomeProduct();
+      // print(homeSlider.imgs!.length);
+
+      _liveHomeProduct.add(homeSlider);
     } catch (e) {
       print(e);
     }
@@ -71,6 +100,26 @@ class HomeBloc {
     } catch (e) {
       print(e);
     }
+  }
+
+  final BehaviorSubject<ProductdetailWiseModal> _liveProductDetails =
+      BehaviorSubject<ProductdetailWiseModal>();
+  BehaviorSubject<ProductdetailWiseModal> get getProductDetails =>
+      _liveProductDetails;
+  fetchProductdetails(id) async {
+    try {
+      ProductdetailWiseModal homeSlider =
+          await _homeRepo.fetchProductdetails(id);
+      // print(homeSlider.imgs!.length);
+
+      _liveProductDetails.add(homeSlider);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  removeState() {
+    _liveProductDetails.addError('error');
   }
 
   final BehaviorSubject<CategoryModal> _liveCategory =
