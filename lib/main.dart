@@ -18,11 +18,13 @@ import 'package:spicywhips/drawerItem/productdiscription.dart';
 import 'package:spicywhips/drawerItem/shop.dart';
 import 'package:spicywhips/drawerItem/special.dart';
 import 'package:spicywhips/drawerItem/womencat.dart';
+import 'package:spicywhips/navbar/beg.dart';
 import 'package:spicywhips/navbar/category.dart';
 import 'package:spicywhips/navbar/navigationbar.dart';
 import 'package:spicywhips/navbar/search.dart';
 import 'package:spicywhips/screen/blogdetail.dart';
 import 'package:spicywhips/screen/checkout.dart';
+import 'package:spicywhips/screen/editaddress.dart';
 import 'package:spicywhips/screen/faqanswer.dart';
 import 'package:spicywhips/screen/notification.dart';
 import 'package:spicywhips/screen/ratedelivery.dart';
@@ -95,6 +97,8 @@ class MyApp extends StatelessWidget {
           "/vote": (context) => Vote(),
           "/ratedelivery": (context) => Ratedelivery(),
           "/rateproduct": (context) => Rateproduct(),
+          "/beg": (context) => MyBeg(),
+          "/editaddress": (context) => EditAddress(),
         });
   }
 }

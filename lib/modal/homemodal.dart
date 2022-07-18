@@ -241,3 +241,53 @@ class SubcatResultModal {
     supercategory = js['supercategory'] ?? "";
   }
 }
+
+class UserModal {
+  UserdetailModal? user;
+  UserModal(js) {
+    user = UserdetailModal(js['user']);
+  }
+}
+
+class UserdetailModal {
+  String? id;
+  String? firstName;
+  String? phone;
+  String? email;
+  UserdetailModal(js) {
+    id = js['_id'] ?? "";
+    firstName = js['firstName'] ?? "";
+    phone = js['phone'] ?? "";
+    email = js['email'] ?? "";
+  }
+}
+
+class AddressModal {
+  List<AddressDetailModal> result = [];
+  AddressModal(js) {
+    for (var i = 0; i < js['result'].length; i++) {
+      result.add(AddressDetailModal(js["result"][i]));
+    }
+  }
+}
+
+class AddressDetailModal {
+  String? id;
+  String? user;
+  String? name;
+  String? phone;
+  String? address;
+  String? landmark;
+  String? pincode;
+  String? city;
+  AddressDetailModal(js) {
+    id = js['_id'] ?? "";
+    user = js['user'] ?? "";
+    name = js['name'] ?? "";
+    phone = js['phone'] ?? "";
+    address = js['address'] ?? "";
+    landmark = js['landmark'] ?? "";
+    city = js['city'] ?? "";
+    pincode = js['pincode'] ?? "";
+  }
+}

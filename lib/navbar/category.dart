@@ -1,8 +1,6 @@
 // Category
 import "package:flutter/material.dart";
-import 'package:flutter_dropdown/flutter_dropdown.dart';
 import 'package:lottie/lottie.dart';
-import 'package:spicywhips/auth/login.dart';
 import 'package:spicywhips/const/color.dart';
 import 'package:spicywhips/modal/productmodal.dart';
 

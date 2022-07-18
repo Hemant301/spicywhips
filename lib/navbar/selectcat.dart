@@ -23,8 +23,7 @@ class _SelectCatState extends State<SelectCat> {
 
   checkId() async {
     Map data = await homeapi.fetchSupercat();
-    print('yahi h++++++++++++++++++++++++++++');
-    print(data['categories'][0]["_id"]);
+//    print(data['categories'][0]["_id"]);
     setState(() {
       subId = data['categories'][0]["_id"];
     });

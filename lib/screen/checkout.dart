@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:spicywhips/auth/login.dart';
+import 'package:spicywhips/bloc/homebloc.dart';
 import 'package:spicywhips/const/strings.dart';
 import 'package:spicywhips/const/textfild.dart';
+import 'package:spicywhips/modal/homemodal.dart';
 
 class Checkout extends StatefulWidget {
   const Checkout({Key? key}) : super(key: key);
@@ -13,12 +15,15 @@ class Checkout extends StatefulWidget {
   State<Checkout> createState() => _CheckoutState();
 }
 
+int addressIndex = 0;
+
 class _CheckoutState extends State<Checkout> {
   int activeIndex = 0;
   int paymentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    homeBloc.fetchAddress();
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -41,48 +46,83 @@ class _CheckoutState extends State<Checkout> {
                 "Delivery Address",
                 style: TextStyle(fontSize: 18),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      activeIndex = 1;
-                    });
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Color(0xffC4C4C4)),
-                        color: Color(0xffE5E5E5),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width / 1.3,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Hemanti Kumari",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                  "House No.- 55, Tirupati Apartment, Road no.-2, Vasant Vihar, New Delhi"),
-                              Text("Mob.no- 3825062454")
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                            child: Icon(
-                          Icons.circle,
-                          color: activeIndex == 1 ? themeRed : Colors.white,
-                        ))
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              StreamBuilder<AddressModal>(
+                  stream: homeBloc.getAddress.stream,
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) return Container();
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          snapshot.data!.result.length == 0
+                              ? Container()
+                              : InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      activeIndex = 1;
+                                    });
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Color(0xffC4C4C4)),
+                                        color: Color(0xffE5E5E5),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              1.3,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                snapshot.data!
+                                                    .result[addressIndex].name!,
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Text(snapshot
+                                                  .data!
+                                                  .result[addressIndex]
+                                                  .address!),
+                                              Text(snapshot
+                                                  .data!
+                                                  .result[addressIndex]
+                                                  .landmark!),
+                                              Text(snapshot.data!
+                                                  .result[addressIndex].city!),
+                                              Text(snapshot
+                                                  .data!
+                                                  .result[addressIndex]
+                                                  .pincode!),
+                                              Text(
+                                                  "Mob.no- ${snapshot.data!.result[addressIndex].phone}")
+                                            ],
+                                          ),
+                                        ),
+                                        // Expanded(
+                                        //     child: Icon(
+                                        //   Icons.circle,
+                                        //   color:
+                                        //       activeIndex == 1 ? themeRed : Colors.white,
+                                        // ))
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                        ],
+                      ),
+                    );
+                  }),
               SizedBox(
                 height: 5,
               ),

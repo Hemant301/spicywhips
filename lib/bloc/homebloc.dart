@@ -1,6 +1,7 @@
 import 'package:rxdart/rxdart.dart';
 import 'package:spicywhips/modal/homemodal.dart';
 import 'package:spicywhips/modal/productdetailmodal.dart';
+import 'package:spicywhips/modal/wishListModal.dart';
 import 'package:spicywhips/repo/homerepo.dart';
 
 class HomeBloc {
@@ -28,6 +29,20 @@ class HomeBloc {
       // print(homeSlider.imgs!.length);
 
       _liveSubcat.add(homeSlider);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  final BehaviorSubject<WishListModal> _liveWishList =
+      BehaviorSubject<WishListModal>();
+  BehaviorSubject<WishListModal> get getWishList => _liveWishList;
+  fetchWishlist() async {
+    try {
+      WishListModal homeSlider = await _homeRepo.fetchWishlist();
+      // print(homeSlider.imgs!.length);
+
+      _liveWishList.add(homeSlider);
     } catch (e) {
       print(e);
     }
@@ -118,6 +133,20 @@ class HomeBloc {
     }
   }
 
+  final BehaviorSubject<CartModal> _livecartitems =
+      BehaviorSubject<CartModal>();
+  BehaviorSubject<CartModal> get getcartitems => _livecartitems;
+  fetchCartitems() async {
+    try {
+      CartModal homeSlider = await _homeRepo.fetchCartitems();
+      // print(homeSlider.imgs!.length);
+
+      _livecartitems.add(homeSlider);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   removeState() {
     _liveProductDetails.addError('error');
   }
@@ -136,6 +165,20 @@ class HomeBloc {
     }
   }
 
+  final BehaviorSubject<UserModal> liveUserDetails =
+      BehaviorSubject<UserModal>();
+  BehaviorSubject<UserModal> get getUserDetails => liveUserDetails;
+  fetchUsedetails() async {
+    try {
+      UserModal homeSlider = await _homeRepo.fetchUsedetails();
+      // print(homeSlider.imgs!.length);
+
+      liveUserDetails.add(homeSlider);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   final BehaviorSubject<CategoryModal> _liveSubCategory =
       BehaviorSubject<CategoryModal>();
   BehaviorSubject<CategoryModal> get getSubCategory => _liveSubCategory;
@@ -145,6 +188,20 @@ class HomeBloc {
       // print(homeSlider.imgs!.length);
 
       _liveSubCategory.add(homeSlider);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  final BehaviorSubject<AddressModal> _liveAddress =
+      BehaviorSubject<AddressModal>();
+  BehaviorSubject<AddressModal> get getAddress => _liveAddress;
+  fetchAddress() async {
+    try {
+      AddressModal homeSlider = await _homeRepo.fetchAddress();
+      // print(homeSlider.imgs!.length);
+
+      _liveAddress.add(homeSlider);
     } catch (e) {
       print(e);
     }

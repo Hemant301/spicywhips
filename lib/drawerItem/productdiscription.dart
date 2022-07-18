@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:spicywhips/api/homeapi.dart';
 import 'package:spicywhips/bloc/homebloc.dart';
 import 'package:spicywhips/const/color.dart';
 import 'package:spicywhips/const/strings.dart';
@@ -290,9 +292,19 @@ class _ProductDiscriptionState extends State<ProductDiscription> {
                               Row(
                                 children: [
                                   InkWell(
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                          context, "/navigationbar");
+                                    onTap: () async {
+                                      HomeApi _api = HomeApi();
+                                      Map data = await _api.addToCart(
+                                          p_id: snapshot.data!.product!.id!,
+                                          mrp: snapshot.data!.product!
+                                              .attr[colorIndex].mrp!,
+                                          price: snapshot.data!.product!
+                                              .attr[colorIndex].price!);
+                                      if (data['status'].toString() == "200") {
+                                        Navigator.pushNamed(context, '/beg');
+                                        Fluttertoast.showToast(
+                                            msg: data['msg']);
+                                      }
                                     },
                                     child: Container(
                                       width: MediaQuery.of(context).size.width -
@@ -314,15 +326,64 @@ class _ProductDiscriptionState extends State<ProductDiscription> {
                                   SizedBox(
                                     width: 15,
                                   ),
-                                  Container(
-                                      decoration: BoxDecoration(
-                                          color: Color.fromARGB(
-                                              255, 193, 152, 156),
-                                          border:
-                                              Border.all(color: Colors.grey)),
-                                      height: 50,
-                                      width: 45,
-                                      child: Icon(Icons.favorite_border)),
+                                  snapshot.data!.isWhishlist == 1
+                                      ? InkWell(
+                                          onTap: () async {
+                                            HomeApi _api = HomeApi();
+                                            Map data =
+                                                await _api.removeWishList(
+                                                    snapshot.data!.product!.id);
+                                            print(data);
+                                            if (data['status'].toString() ==
+                                                "200") {
+                                              Fluttertoast.showToast(
+                                                  msg: data["message"]);
+                                              setState(() {
+                                                homeBloc.fetchProductdetails(
+                                                    rcvdData['id']);
+                                              });
+                                            } else {}
+                                          },
+                                          child: Container(
+                                              decoration: BoxDecoration(
+                                                  color: Color.fromARGB(
+                                                      255, 193, 152, 156),
+                                                  border: Border.all(
+                                                      color: Colors.grey)),
+                                              height: 50,
+                                              width: 45,
+                                              child: Icon(
+                                                Icons.favorite,
+                                                color: Colors.red,
+                                              )),
+                                        )
+                                      : InkWell(
+                                          onTap: () async {
+                                            HomeApi _api = HomeApi();
+                                            Map data = await _api.addWishlist(
+                                                snapshot.data!.product!.id!);
+                                            print(data['status']);
+                                            if (data['status'].toString() ==
+                                                "200") {
+                                              Fluttertoast.showToast(
+                                                  msg: data['msg']);
+                                              setState(() {
+                                                homeBloc.fetchProductdetails(
+                                                    rcvdData['id']);
+                                              });
+                                            }
+                                          },
+                                          child: Container(
+                                              decoration: BoxDecoration(
+                                                  color: Color.fromARGB(
+                                                      255, 193, 152, 156),
+                                                  border: Border.all(
+                                                      color: Colors.grey)),
+                                              height: 50,
+                                              width: 45,
+                                              child:
+                                                  Icon(Icons.favorite_border)),
+                                        ),
                                 ],
                               ),
                               SizedBox(

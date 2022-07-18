@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:spicywhips/api/homeapi.dart';
 import 'package:spicywhips/modal/homemodal.dart';
 import 'package:spicywhips/modal/productdetailmodal.dart';
+import 'package:spicywhips/modal/wishListModal.dart';
 
 class HomeRepo {
   HomeApi homeApi = HomeApi();
@@ -16,6 +17,12 @@ class HomeRepo {
     final response = await homeApi.fetchSubCat(id);
     var jsonResponse = jsonDecode(response.body) as Map;
     return SubCatModal(jsonResponse);
+  }
+
+  Future<WishListModal> fetchWishlist() async {
+    final response = await homeApi.fetchWishlist();
+    var jsonResponse = jsonDecode(response.body) as Map;
+    return WishListModal(jsonResponse);
   }
 
   Future<CommercialModal> fetchCommercials() async {
@@ -54,15 +61,33 @@ class HomeRepo {
     return ProductdetailWiseModal(jsonResponse);
   }
 
+  Future<CartModal> fetchCartitems() async {
+    final response = await homeApi.fetchCartitems();
+    var jsonResponse = jsonDecode(response.body) as Map;
+    return CartModal(jsonResponse);
+  }
+
   Future<CategoryModal> fetchCategory() async {
     final response = await homeApi.fetchCategory();
     var jsonResponse = jsonDecode(response.body) as Map;
     return CategoryModal(jsonResponse);
   }
 
+  Future<UserModal> fetchUsedetails() async {
+    final response = await homeApi.fetchUsedetails();
+    var jsonResponse = jsonDecode(response.body) as Map;
+    return UserModal(jsonResponse);
+  }
+
   Future<CategoryModal> fetchSubCategory() async {
     final response = await homeApi.fetchSubCategory();
     var jsonResponse = jsonDecode(response.body) as Map;
     return CategoryModal(jsonResponse);
+  }
+
+  Future<AddressModal> fetchAddress() async {
+    final response = await homeApi.fetchAddress();
+    var jsonResponse = jsonDecode(response.body) as Map;
+    return AddressModal(jsonResponse);
   }
 }

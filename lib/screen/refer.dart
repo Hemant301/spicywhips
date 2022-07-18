@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:spicywhips/auth/login.dart';
 
-class Refer extends StatelessWidget {
+class Refer extends StatefulWidget {
   const Refer({Key? key}) : super(key: key);
 
+  @override
+  State<Refer> createState() => _ReferState();
+}
+
+class _ReferState extends State<Refer> {
+  String refralCode = "Jh23aaa45";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,11 +42,17 @@ class Refer extends StatelessWidget {
           SizedBox(
             height: 50,
           ),
-          Center(
-            child: Text(
-              "Tap to copy the code",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold),
+          InkWell(
+            onTap: () {
+              Clipboard.setData(ClipboardData(text: refralCode));
+              Fluttertoast.showToast(msg: 'Copied');
+            },
+            child: Center(
+              child: Text(
+                "Tap to copy the code",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
             ),
           ),
           SizedBox(
@@ -52,7 +66,7 @@ class Refer extends StatelessWidget {
                   BoxDecoration(border: Border.all(color: Color(0xffC4C4C4))),
               child: Center(
                 child: Text(
-                  "KAEEIGH",
+                  "$refralCode",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
