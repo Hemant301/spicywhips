@@ -4,7 +4,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:spicywhips/api/homeapi.dart';
 import 'package:spicywhips/auth/login.dart';
 import 'package:spicywhips/bloc/homebloc.dart';
+import 'package:spicywhips/const/strings.dart';
 import 'package:spicywhips/modal/homemodal.dart';
+import 'package:spicywhips/shimmer/shimmer.dart';
 
 class SelectCat extends StatefulWidget {
   const SelectCat({Key? key}) : super(key: key);
@@ -91,7 +93,9 @@ class _SelectCatState extends State<SelectCat> {
                             padding: const EdgeInsets.all(5.0),
                             child: InkWell(
                               onTap: () {
+                                homeBloc.removeState();
                                 setState(() {
+                                  subId = snapshot.data!.data[index].id!;
                                   homeBloc.fetchSubCat(
                                       "${snapshot.data!.data[index].id}");
                                 });
@@ -99,12 +103,18 @@ class _SelectCatState extends State<SelectCat> {
                               child: Container(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 12, vertical: 15),
-                                color: Color(0xffF3F3F3),
+                                color: subId == snapshot.data!.data[index].id
+                                    ? themeRed
+                                    : Color(0xffF3F3F3),
                                 // height: 76,
                                 child: Center(
                                   child: Text(
                                     snapshot.data!.data[index].name!,
                                     style: TextStyle(
+                                        color: subId ==
+                                                snapshot.data!.data[index].id
+                                            ? Colors.white
+                                            : Colors.black,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 24),
                                   ),
@@ -133,7 +143,7 @@ class _SelectCatState extends State<SelectCat> {
                   stream: homeBloc.getSubcat.stream,
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
-                      return Container();
+                      return Shimmer_Subcat();
                     }
                     return GridView.count(
                       crossAxisCount: 2,
@@ -146,10 +156,12 @@ class _SelectCatState extends State<SelectCat> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: InkWell(
                                   onTap: () {
-                                    Navigator.pushNamed(
-                                        context, '/category', arguments: {
-                                      'title': snapshot.data!.data[index].name
-                                    });
+                                    Navigator.pushNamed(context, '/category',
+                                        arguments: {
+                                          'title':
+                                              snapshot.data!.data[index].name,
+                                          'id': snapshot.data!.data[index].id,
+                                        });
                                   },
                                   child: Container(
                                     width:

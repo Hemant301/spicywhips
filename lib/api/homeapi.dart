@@ -25,12 +25,61 @@ class HomeApi {
   }
 
   Future<dynamic> fetchSubCat(id) async {
+    print("id $id");
     try {
       final response = await client.get(
         Uri.parse("${baseUrl}/api/subcategory/get/supercategory/$id"),
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         // print(response.body);
+        return response;
+      } else {
+        //   print('Request failed with status: ${response.statusCode}.');
+      }
+    } catch (e) {
+      // print(e);
+    } finally {}
+  }
+
+  Future<dynamic> fetchPopularSearch(id) async {
+    try {
+      final response = await client.get(
+        Uri.parse("${baseUrl}/api/search/get"),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        //  print(response.body);
+        return response;
+      } else {
+        //   print('Request failed with status: ${response.statusCode}.');
+      }
+    } catch (e) {
+      // print(e);
+    } finally {}
+  }
+
+  Future<dynamic> fetchNewSearch(id) async {
+    try {
+      final response = await client.get(
+        Uri.parse("${baseUrl}/api/product/new"),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        //  print(response.body);
+        return response;
+      } else {
+        //   print('Request failed with status: ${response.statusCode}.');
+      }
+    } catch (e) {
+      // print(e);
+    } finally {}
+  }
+
+  Future<dynamic> fetchTrendingSearch(id) async {
+    try {
+      final response = await client.get(
+        Uri.parse("${baseUrl}/api/product/trending"),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        //  print(response.body);
         return response;
       } else {
         //   print('Request failed with status: ${response.statusCode}.');
@@ -164,8 +213,6 @@ class HomeApi {
   }
 
   Future<dynamic> fetchCartitems() async {
-    // print(userCred.getUserId());
-    // print(userCred.getUserToken());
     try {
       final response = await client.get(
           Uri.parse("${baseUrl}/api/user/getCartItems/${userCred.getUserId()}"),
@@ -174,10 +221,27 @@ class HomeApi {
             "Authorization": "Bearer ${userCred.getUserToken()}"
           });
       if (response.statusCode == 200 || response.statusCode == 201) {
-        // print(response.body);
+        //  print(response.body);
         return response;
       } else {
         //   print('Request failed with status: ${response.statusCode}.');
+      }
+    } catch (e) {
+      // print(e);
+    } finally {}
+  }
+
+  Future<dynamic> fetchCSupersubCat(id) async {
+    try {
+      print(id);
+      final response = await client.get(
+        Uri.parse("${baseUrl}/api/product/subcat/$id"),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print(response.body);
+        return response;
+      } else {
+        print('Request failed with status: ${response.statusCode}.');
       }
     } catch (e) {
       // print(e);
@@ -305,7 +369,7 @@ class HomeApi {
           });
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print(response.body);
+        //   print(response.body);
 
         return jsonDecode(response.body) as Map;
       } else {

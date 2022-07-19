@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:spicywhips/bloc/homebloc.dart';
 import 'package:spicywhips/modal/homemodal.dart';
+import 'package:spicywhips/shimmer/shimmer.dart';
 
 class MyCorosule extends StatefulWidget {
   MyCorosule({
@@ -22,7 +23,7 @@ class _MyCorosuleState extends State<MyCorosule> {
         stream: homeBloc.getslider.stream,
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return Container();
+            return Shimmer_homeSlider();
           }
           return Column(
             children: [

@@ -235,10 +235,13 @@ class SubcatResultModal {
   String? id;
   String? name;
   String? supercategory;
+  String? subcategoryImage;
+
   SubcatResultModal(js) {
-    id = js['id'] ?? "";
+    id = js['_id'] ?? "";
     name = js['name'] ?? "";
     supercategory = js['supercategory'] ?? "";
+    subcategoryImage = js['subcategoryImage'] ?? "";
   }
 }
 
@@ -289,5 +292,48 @@ class AddressDetailModal {
     landmark = js['landmark'] ?? "";
     city = js['city'] ?? "";
     pincode = js['pincode'] ?? "";
+  }
+}
+
+class PopulatKeyModal {
+  List<PopulatKeysModal> search = [];
+  PopulatKeyModal(js) {
+    for (var i = 0; i < js['search'].length; i++) {
+      search.add(PopulatKeysModal(js['search'][i]));
+    }
+  }
+}
+
+class PopulatKeysModal {
+  String? name;
+  PopulatKeysModal(js) {
+    name = js['name'];
+  }
+}
+
+class NewSearchModal {
+  List<NewSearchdataModal> search = [];
+  NewSearchModal(js) {
+    for (var i = 0; i < js['Products'].length; i++) {
+      search.add(NewSearchdataModal(js['Products'][i]));
+    }
+  }
+}
+
+class NewSearchdataModal {
+  List<NewSearchImageModal> image = [];
+  String? id;
+  NewSearchdataModal(js) {
+    for (var i = 0; i < js['productPictures'].length; i++) {
+      image.add(NewSearchImageModal(js['productPictures'][i]));
+    }
+    id = js["_id"] ?? "";
+  }
+}
+
+class NewSearchImageModal {
+  String? img;
+  NewSearchImageModal(js) {
+    img = js['img'] ?? "";
   }
 }

@@ -1,4 +1,5 @@
 import 'package:rxdart/rxdart.dart';
+import 'package:spicywhips/modal/categorymodal.dart';
 import 'package:spicywhips/modal/homemodal.dart';
 import 'package:spicywhips/modal/productdetailmodal.dart';
 import 'package:spicywhips/modal/wishListModal.dart';
@@ -29,6 +30,45 @@ class HomeBloc {
       // print(homeSlider.imgs!.length);
 
       _liveSubcat.add(homeSlider);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  final BehaviorSubject<PopulatKeyModal> _livePopularSearch =
+      BehaviorSubject<PopulatKeyModal>();
+  BehaviorSubject<PopulatKeyModal> get getpopularSearch => _livePopularSearch;
+  fetchPopularSearch(id) async {
+    try {
+      PopulatKeyModal homeSlider = await _homeRepo.fetchPopularSearch(id);
+
+      _livePopularSearch.add(homeSlider);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  final BehaviorSubject<NewSearchModal> _liveTrendingSearch =
+      BehaviorSubject<NewSearchModal>();
+  BehaviorSubject<NewSearchModal> get getTrendingSearch => _liveTrendingSearch;
+  fetchTrendingSearch(id) async {
+    try {
+      NewSearchModal homeSlider = await _homeRepo.fetchTrendingSearch(id);
+
+      _liveTrendingSearch.add(homeSlider);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  final BehaviorSubject<NewSearchModal> _livenewSearch =
+      BehaviorSubject<NewSearchModal>();
+  BehaviorSubject<NewSearchModal> get getNewSearch => _livenewSearch;
+  fetchNewSearch(id) async {
+    try {
+      NewSearchModal homeSlider = await _homeRepo.fetchNewSearch(id);
+
+      _livenewSearch.add(homeSlider);
     } catch (e) {
       print(e);
     }
@@ -147,8 +187,28 @@ class HomeBloc {
     }
   }
 
+  final BehaviorSubject<SuperSubcatModal> _liveSupersubCat =
+      BehaviorSubject<SuperSubcatModal>();
+  BehaviorSubject<SuperSubcatModal> get getSuperSubcat => _liveSupersubCat;
+  fetchCSupersubCat(id) async {
+    try {
+      SuperSubcatModal homeSlider = await _homeRepo.fetchCSupersubCat(id);
+      // print(homeSlider.imgs!.length);
+
+      _liveSupersubCat.add(homeSlider);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   removeState() {
+    _liveSubcat.addError('error');
     _liveProductDetails.addError('error');
+    _liveSupersubCat.addError('error');
+  }
+
+  removeState2() {
+    _liveSupersubCat.addError('error');
   }
 
   final BehaviorSubject<CategoryModal> _liveCategory =

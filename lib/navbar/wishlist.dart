@@ -9,6 +9,7 @@ import 'package:spicywhips/bloc/homebloc.dart';
 import 'package:spicywhips/const/strings.dart';
 import 'package:spicywhips/modal/productmodal.dart';
 import 'package:spicywhips/modal/wishListModal.dart';
+import 'package:spicywhips/shimmer/shimmer.dart';
 
 class Wishlist extends StatefulWidget {
   const Wishlist({Key? key}) : super(key: key);
@@ -18,195 +19,280 @@ class Wishlist extends StatefulWidget {
 }
 
 class _WishlistState extends State<Wishlist> {
+  bool isLoader = false;
   @override
   Widget build(BuildContext context) {
     homeBloc.fetchWishlist();
     return Scaffold(
         body: SingleChildScrollView(
       scrollDirection: Axis.vertical,
-      child: StreamBuilder<WishListModal>(
-          stream: homeBloc.getWishList.stream,
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) return Container();
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                backbutton(),
-                SizedBox(
-                  height: 30,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: 8,
-                  ),
-                  child: Text(
-                    "WISHLIST",
-                    style: TextStyle(
-                        color: Colors.black,
-                        letterSpacing: 1,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25),
-                  ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                GridView(
-                    padding: EdgeInsets.zero,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                        childAspectRatio: 8.5 / 13.6),
-                    shrinkWrap: true,
-                    // crossAxisCount: 2,
-                    // crossAxisSpacing: 1,
-                    // mainAxisSpacing: 10,
-                    physics: NeverScrollableScrollPhysics(),
-                    children: List.generate(
-                        snapshot.data!.result.length,
-                        (index) => Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          StreamBuilder<WishListModal>(
+              stream: homeBloc.getWishList.stream,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData)
+                  return SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: Shimmer_wishList());
+                return Column(
+                  children: [
+                    snapshot.data!.result.isEmpty
+                        ? Center(
+                            child: Column(
                               children: [
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.pushNamed(
-                                        context, "/productdiscription",
-                                        arguments: {
-                                          'id': snapshot
-                                              .data!.result[index].product!.id
-                                        });
-                                  },
-                                  child: Stack(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 5),
-                                        child: Image.network(
-                                          snapshot.data!.result[index].product!
-                                              .profile[0].img!,
-                                          height: 200,
-                                          width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  2 -
-                                              10,
-                                        ),
-                                      ),
-                                      Positioned(
-                                          top: 25,
-                                          right: 15,
-                                          child: InkWell(
-                                            onTap: () async {
-                                              HomeApi _api = HomeApi();
-                                              Map data = await _api
-                                                  .removeWishList(snapshot
-                                                      .data!
-                                                      .result[index]
-                                                      .product!
-                                                      .id);
-                                              print(data);
-                                              if (data['status'].toString() ==
-                                                  "200") {
-                                                Fluttertoast.showToast(
-                                                    msg: data["message"]);
-                                                setState(() {
-                                                  homeBloc.fetchWishlist();
-                                                });
-                                              } else {}
-                                            },
-                                            child: Container(
-                                                padding: EdgeInsets.all(4),
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    shape: BoxShape.circle),
-                                                child: Icon(
-                                                  Icons.close,
-                                                  size: 15,
-                                                )),
-                                          ))
-                                    ],
-                                  ),
+                                // Align(
+                                //     alignment: Alignment.topLeft,
+                                //     child: backbutton()),
+                                SizedBox(
+                                  height: 100,
                                 ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 8),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                    2 -
-                                                10,
-                                        child: Text(
-                                          snapshot.data!.result[index].product!
-                                              .name!,
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 12),
-                                        ),
-                                      ),
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                    2 -
-                                                10,
-                                        child: Text(
-                                          snapshot.data!.result[index].product!
-                                              .desc!,
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              // fontWeight: FontWeight.bold,
-                                              fontSize: 11),
-                                        ),
-                                      ),
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                    2 -
-                                                10,
-                                        child: Text(
-                                          "$rupeeSymbol ${snapshot.data!.result[index].product!.attr[0].price!}",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              // fontWeight: FontWeight.bold,
-                                              fontSize: 11),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Wrap(
-                                        spacing: 10,
-                                        children: List.generate(
-                                          snapshot.data!.result[index].product!
-                                              .attr.length,
-                                          (c) => Container(
-                                            color: changeColor(snapshot
-                                                .data!
-                                                .result[index]
-                                                .product!
-                                                .attr[c]
-                                                .colorname),
-                                            height: 15,
-                                            width: 15,
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                )
+                                Opacity(
+                                  opacity: 0.5,
+                                  child: Lottie.asset('assets/empty.json',
+                                      height: 200, repeat: false),
+                                ),
+                                Text("No Items in your cart")
                               ],
-                            )))
-              ],
-            );
-          }),
+                            ),
+                          )
+                        : Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              backbutton(),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  left: 8,
+                                ),
+                                child: Text(
+                                  "WISHLIST",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      letterSpacing: 1,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 25),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              GridView(
+                                  padding: EdgeInsets.zero,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                          mainAxisSpacing: 10,
+                                          crossAxisSpacing: 10,
+                                          childAspectRatio: 8.5 / 13.6),
+                                  shrinkWrap: true,
+                                  // crossAxisCount: 2,
+                                  // crossAxisSpacing: 1,
+                                  // mainAxisSpacing: 10,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  children: List.generate(
+                                      snapshot.data!.result.length,
+                                      (index) => Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              InkWell(
+                                                onTap: () {
+                                                  Navigator.pushNamed(context,
+                                                      "/productdiscription",
+                                                      arguments: {
+                                                        'id': snapshot
+                                                            .data!
+                                                            .result[index]
+                                                            .product!
+                                                            .id
+                                                      });
+                                                },
+                                                child: Stack(
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 8,
+                                                          vertical: 5),
+                                                      child: Image.network(
+                                                        snapshot
+                                                            .data!
+                                                            .result[index]
+                                                            .product!
+                                                            .profile[0]
+                                                            .img!,
+                                                        height: 200,
+                                                        width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width /
+                                                                2 -
+                                                            10,
+                                                      ),
+                                                    ),
+                                                    Positioned(
+                                                        top: 25,
+                                                        right: 15,
+                                                        child: InkWell(
+                                                          onTap: () async {
+                                                            setState(() {
+                                                              isLoader = true;
+                                                            });
+                                                            HomeApi _api =
+                                                                HomeApi();
+                                                            Map data = await _api
+                                                                .removeWishList(
+                                                                    snapshot
+                                                                        .data!
+                                                                        .result[
+                                                                            index]
+                                                                        .product!
+                                                                        .id);
+                                                            print(data);
+                                                            if (data['status']
+                                                                    .toString() ==
+                                                                "200") {
+                                                              Fluttertoast
+                                                                  .showToast(
+                                                                      msg: data[
+                                                                          "message"]);
+                                                              setState(() {
+                                                                homeBloc
+                                                                    .fetchWishlist();
+                                                                isLoader =
+                                                                    false;
+                                                              });
+                                                            } else {}
+                                                          },
+                                                          child: Container(
+                                                              padding:
+                                                                  EdgeInsets.all(
+                                                                      4),
+                                                              decoration: BoxDecoration(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  shape: BoxShape
+                                                                      .circle),
+                                                              child: Icon(
+                                                                Icons.close,
+                                                                size: 15,
+                                                              )),
+                                                        ))
+                                                  ],
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 8),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Container(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                      .size
+                                                                      .width /
+                                                                  2 -
+                                                              10,
+                                                      child: Text(
+                                                        snapshot
+                                                            .data!
+                                                            .result[index]
+                                                            .product!
+                                                            .name!,
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 12),
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                      .size
+                                                                      .width /
+                                                                  2 -
+                                                              10,
+                                                      child: Text(
+                                                        snapshot
+                                                            .data!
+                                                            .result[index]
+                                                            .product!
+                                                            .desc!,
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            // fontWeight: FontWeight.bold,
+                                                            fontSize: 11),
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                      .size
+                                                                      .width /
+                                                                  2 -
+                                                              10,
+                                                      child: Text(
+                                                        "$rupeeSymbol ${snapshot.data!.result[index].product!.attr[0].price!}",
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            // fontWeight: FontWeight.bold,
+                                                            fontSize: 11),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    Wrap(
+                                                      spacing: 10,
+                                                      children: List.generate(
+                                                        snapshot
+                                                            .data!
+                                                            .result[index]
+                                                            .product!
+                                                            .attr
+                                                            .length,
+                                                        (c) => Container(
+                                                          color: changeColor(
+                                                              snapshot
+                                                                  .data!
+                                                                  .result[index]
+                                                                  .product!
+                                                                  .attr[c]
+                                                                  .colorname),
+                                                          height: 15,
+                                                          width: 15,
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          )))
+                            ],
+                          ),
+                  ],
+                );
+              }),
+          isLoader == false
+              ? Container()
+              : Lottie.asset('assets/loding.json',
+                  frameRate: FrameRate(120), height: 150)
+        ],
+      ),
     ));
   }
 
