@@ -2,6 +2,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:spicywhips/api/homeapi.dart';
 import 'package:spicywhips/auth/login.dart';
 import 'package:spicywhips/bloc/homebloc.dart';
 import 'package:spicywhips/const/strings.dart';
@@ -16,13 +17,34 @@ class Checkout extends StatefulWidget {
 }
 
 int addressIndex = 0;
+String addressId = "";
 
 class _CheckoutState extends State<Checkout> {
+  bool is_gift = false;
+  TextEditingController giftNameController = TextEditingController();
+  TextEditingController giftNoteController = TextEditingController();
   int activeIndex = 0;
   int paymentIndex = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getAddressId();
+  }
+
+  getAddressId() async {
+    Map data = await homeapi.fetchAddressID();
+    // print(data);
+    if (data['result'].length != 0) {
+      addressId = data["result"][addressIndex]['_id'];
+      print("Default address id $addressId");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final Map rcvdData = ModalRoute.of(context)!.settings.arguments as Map;
+    print(rcvdData['total']);
     homeBloc.fetchAddress();
     return Scaffold(
       body: SingleChildScrollView(
@@ -238,6 +260,28 @@ class _CheckoutState extends State<Checkout> {
                 ),
               ),
               SizedBox(
+                height: 10,
+              ),
+              is_gift == false
+                  ? Container()
+                  : Align(
+                      alignment: Alignment.topRight,
+                      child: InkWell(
+                        onTap: () {
+                          setState(() {
+                            is_gift = false;
+                          });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Remove Gift note",
+                            style: TextStyle(color: themeRed),
+                          ),
+                        ),
+                      ),
+                    ),
+              SizedBox(
                 height: 50,
               ),
               Padding(
@@ -250,15 +294,31 @@ class _CheckoutState extends State<Checkout> {
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
-                    Text("$rupeeSymbol 2599")
+                    Text("$rupeeSymbol ${rcvdData['total']}")
                   ],
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/checkout');
+                  onTap: () async {
+                    String orderId = DateTime.now()
+                        .millisecondsSinceEpoch
+                        .remainder(10000000000)
+                        .toString();
+
+                    print(addressId);
+                    HomeApi _api = HomeApi();
+                    Map data = await _api.codOrder(
+                        addressId: addressId,
+                        paymentMode: "cod",
+                        transactionId: "SPICY$orderId",
+                        is_gift: is_gift,
+                        giftName: giftNameController.text,
+                        giftNote: giftNoteController.text,
+                        total: rcvdData['total']);
+
+                    Navigator.pushNamed(context, '/thankyou');
                   },
                   child: Container(
                     padding: EdgeInsets.all(10),
@@ -397,12 +457,14 @@ class _CheckoutState extends State<Checkout> {
               ),
               TextCoustomfeild(
                 title: "Name",
+                controller: giftNameController,
               ),
               Padding(
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
                 child: TextCoustomfeild(
                   title: "Note",
+                  controller: giftNoteController,
                   maxLines: 4,
                 ),
               ),
@@ -410,7 +472,10 @@ class _CheckoutState extends State<Checkout> {
                 padding: const EdgeInsets.all(18.0),
                 child: InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, '/');
+                    setState(() {
+                      is_gift = true;
+                    });
+                    Navigator.pop(context);
                   },
                   child: Container(
                     padding: EdgeInsets.all(10),

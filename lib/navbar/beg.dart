@@ -411,7 +411,23 @@ class _MyBegState extends State<MyBeg> {
                                               fontWeight: FontWeight.bold,
                                               fontSize: 15),
                                         ),
-                                        Text('$rupeeSymbol 00.')
+                                        Text('$rupeeSymbol 00')
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'Wallet Discount',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15),
+                                        ),
+                                        Text('$rupeeSymbol 00')
                                       ],
                                     ),
                                     SizedBox(
@@ -438,7 +454,11 @@ class _MyBegState extends State<MyBeg> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: InkWell(
                                   onTap: () {
-                                    Navigator.pushNamed(context, '/checkout');
+                                    Navigator.pushNamed(context, '/checkout',
+                                        arguments: {
+                                          'total': snapshot.data!.total[0].total
+                                              .toString()
+                                        });
                                   },
                                   child: Container(
                                     padding: EdgeInsets.all(10),

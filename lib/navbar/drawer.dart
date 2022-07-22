@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:spicywhips/const/color.dart';
 import 'package:spicywhips/navbar/home.dart';
 import 'package:spicywhips/util/usercred.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
-class DrawersPage extends StatelessWidget {
+class DrawersPage extends StatefulWidget {
   const DrawersPage({Key? key}) : super(key: key);
 
+  @override
+  State<DrawersPage> createState() => _DrawersPageState();
+}
+
+class _DrawersPageState extends State<DrawersPage> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -134,6 +141,12 @@ class DrawersPage extends StatelessWidget {
                         },
                       ),
                       DrawerItem(
+                        name: "My Account",
+                        onTap: () {
+                          Navigator.pushNamed(context, "/myaccount");
+                        },
+                      ),
+                      DrawerItem(
                         name: "About Us",
                         onTap: () {
                           Navigator.pushNamed(context, "/aboutus");
@@ -164,6 +177,45 @@ class DrawersPage extends StatelessWidget {
                           Navigator.pushNamed(context, "/login");
                         },
                       ),
+
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //   children: [
+                      //     Icon(
+                      //       Icons.sunny,
+                      //       color: Colors.orange,
+                      //     ),
+                      //     ToggleSwitch(
+                      //       minHeight: 30,
+                      //       minWidth: 80.0,
+                      //       cornerRadius: 20.0,
+                      //       activeBgColors: [
+                      //         [Colors.amber[800]!],
+                      //         [Color.fromARGB(255, 182, 182, 182)]
+                      //       ],
+                      //       activeFgColor: Colors.white,
+                      //       inactiveBgColor: Colors.grey,
+                      //       inactiveFgColor: Colors.white,
+                      //       initialLabelIndex: 1,
+                      //       totalSwitches: 2,
+                      //       labels: ['Day', 'Night'],
+                      //       radiusStyle: true,
+                      //       onToggle: (index) {
+                      //         Navigator.pop(context);
+                      //         if (index == 1) {
+                      //           // setState(() {
+                      //           //   bgColor = Colors.grey;
+                      //           // });
+                      //         }
+                      //         print('switched to: $index');
+                      //       },
+                      //     ),
+                      //     Icon(
+                      //       Icons.night_shelter,
+                      //       color: Colors.orange,
+                      //     ),
+                      //   ],
+                      // )
                     ]),
                   ),
                 )

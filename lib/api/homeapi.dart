@@ -642,6 +642,71 @@ class HomeApi {
       // print(e);
     } finally {}
   }
+
+  Future<dynamic> fetchAddressID() async {
+    var client = http.Client();
+    try {
+      final response = await client.get(
+          Uri.parse("${baseUrl}/api/user/address/${userCred.getUserId()}"),
+          headers: {"Authorization": "Bearer ${userCred.getUserToken()}"});
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        //   print(response.body);
+        return jsonDecode(response.body) as Map;
+      } else {
+        debugPrint('Request failed with status: ${response.statusCode}.');
+      }
+    } catch (e) {
+      //// print\(e\);
+    } finally {
+      client.close();
+    }
+  }
+
+  Future<dynamic> codOrder(
+      {String addressId = "",
+      dynamic total = "",
+      String paymentMode = "",
+      bool is_gift = false,
+      String giftName = "",
+      String giftNote = "",
+      String transactionId = ""}) async {
+    var client = http.Client();
+    try {
+      final body = {
+        "paymentmode": "$paymentMode",
+        "paymentstatus": "false",
+        "orderstatus": "pending",
+        "transactionid": "$transactionId",
+        "total": int.parse(total),
+        "isGift": is_gift,
+        "giftName": "$giftName",
+        "giftMsg": "$giftNote",
+        "addressid": "$addressId",
+        "userid": userCred.getUserId()
+      };
+      debugPrint("Body : $body");
+      final response = await client.post(
+        Uri.parse("${baseUrl}/api/booking/create"),
+        body: jsonEncode(body),
+        headers: {
+          "Authorization": "Bearer ${userCred.getUserToken()}",
+          "Content-Type": "application/json",
+        },
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print(response.body);
+        return jsonDecode(response.body) as Map;
+      } else {
+        debugPrint('Request failed with status: ${response.statusCode}.');
+      }
+    } catch (e) {
+      //// print\(e\);
+    } finally {
+      client.close();
+    }
+  }
 }
 
 final homeapi = HomeApi();

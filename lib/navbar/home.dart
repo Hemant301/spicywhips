@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:spicywhips/bloc/homebloc.dart';
 import 'package:spicywhips/const/blogslider.dart';
+import 'package:spicywhips/const/color.dart';
 import 'package:spicywhips/const/slider.dart';
 import 'package:spicywhips/const/testimonialSlider.dart';
 import 'package:spicywhips/modal/homemodal.dart';
@@ -22,11 +23,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   ScrollController supcatScroller = ScrollController();
-  List<String> reels = [
-    'assets/dummy/kk.png',
-    'assets/dummy/2.png',
-    'assets/dummy/3.png'
-  ];
 
   int activeindex = 0;
   GlobalKey<ScaffoldState> scaffoldkey = GlobalKey();
@@ -109,7 +105,7 @@ class _HomePageState extends State<HomePage> {
         ),
         backgroundColor: activeindex == 0 ? Colors.white : Color(0xffE5E5E5),
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: bgColor,
           leading: InkWell(
               onTap: () {
                 scaffoldkey.currentState!.openDrawer();

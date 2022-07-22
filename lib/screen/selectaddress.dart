@@ -60,6 +60,8 @@ class _SelectaddressState extends State<Selectaddress> {
                                     onTap: () {
                                       setState(() {
                                         addressIndex = index;
+                                        addressId =
+                                            snapshot.data!.result[index].id!;
                                         // activeIndex = index;
                                       });
                                       Navigator.pop(context);
